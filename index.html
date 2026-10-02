@@ -110,8 +110,8 @@ header.hero .meta{animation:rise .9s .35s both}
 .card:hover::after{opacity:1}
 .stat{font-variant-numeric:tabular-nums}
 nav.toc li a{transition:color .2s,transform .2s;border-left:2px solid transparent;padding-left:8px;margin-left:-10px}
-nav.toc li a.on{color:var(--accent);border-left-color:var(--accent);transform:translateX(3px);font-weight:600}
-section h2 .n{position:relative;display:inline-block}
+nav.toc{overflow-x:hidden}nav.toc li a.on{color:var(--accent);border-left-color:var(--accent);transform:translateX(3px);font-weight:600}
+section h2 .n{position:relative}
 section h2 .n::after{content:"";display:block;height:2px;width:0;background:var(--accent);margin-top:6px;transition:width .8s .2s}
 section.vis h2 .n::after{width:34px}
 tbody tr,.scroll tr{transition:background .15s}
@@ -751,4 +751,4 @@ addEventListener('keydown',function(e){if(e.key==='/'&&!pal.classList.contains('
 })();
 </script>
 </body>
-  </html>
+</html>
