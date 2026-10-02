@@ -144,6 +144,26 @@ tbody tr,.scroll tr{transition:background .15s}
 #pal li a.sel,#pal li a:hover{background:var(--accent-soft);color:var(--accent)}
 #pal li a i{font:500 11px/1.8 var(--mono);color:var(--muted);font-style:normal}
 mark.hl{background:var(--gold-soft);color:inherit;border-radius:3px}
+/* ---- small screens ---- */
+@media(max-width:640px){
+  .wrap{padding:0 16px;gap:0}
+  header.hero{padding:40px 0 30px}
+  .kicker{font-size:10.5px;line-height:1.35;letter-spacing:.12em}
+  .meta{gap:8px 14px;font-size:11px;overflow-wrap:anywhere}
+  section{padding:34px 0 8px}
+  .point{font-size:18px}
+  .scroll,.figure{max-width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--muted) var(--soft)}
+  .scroll table[data-mobile-fit="true"]{min-width:0;width:100%;table-layout:fixed;font-size:13px;overflow-wrap:anywhere}
+  .scroll table[data-mobile-fit="true"] th,.scroll table[data-mobile-fit="true"] td{padding:8px 7px;overflow-wrap:anywhere;word-break:normal}
+  .figure{padding:10px}
+  .figure svg{min-width:640px}
+  .scroll.has-overflow,.figure.has-overflow{scrollbar-gutter:stable}
+  .scroll.has-overflow::after,.figure.has-overflow::after{content:attr(data-scroll-hint);display:block;padding:7px 10px;border-top:1px solid var(--rule);background:var(--soft);color:var(--muted);font:500 10px/1.35 var(--mono);letter-spacing:.02em}
+  .scroll.has-overflow::before,.figure.has-overflow::before{content:"";position:sticky;right:0;float:right;width:18px;height:100%;margin-left:-18px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--card));z-index:1}
+  pre{font-size:12px;padding:11px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .dock{right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:6px}
+  .fab{padding:8px 12px;font-size:12px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -689,6 +709,17 @@ mood      = urgent | focused | bright | playful | gentle | calm | warm | concern
 (function(){
 var d=document,$=function(q,r){return(r||d).querySelector(q)},$$=function(q,r){return[].slice.call((r||d).querySelectorAll(q))};
 var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// Let short tables use the phone width; keep genuinely wide tables and diagrams touch-scrollable.
+var scrollers=$$('.scroll,.figure');
+scrollers.forEach(function(el){
+  var table=$('table',el),heads=table?$$('th',table.rows[0]):[];
+  if(table&&heads.length<=3)table.setAttribute('data-mobile-fit','true');
+  el.setAttribute('role','region');el.setAttribute('tabindex','0');
+  el.setAttribute('data-scroll-hint',table?'Swipe horizontally to see all columns':'Swipe horizontally to explore the diagram');
+  el.setAttribute('aria-label',table?'Scrollable data table. Swipe horizontally to see all columns.':'Scrollable diagram. Swipe horizontally to explore.');
+  function check(){el.classList.toggle('has-overflow',el.scrollWidth>el.clientWidth+2)}
+  check();if(window.ResizeObserver)new ResizeObserver(check).observe(el);else addEventListener('resize',check,{passive:true});
+});
 var bar=d.createElement('div');bar.id='prog';d.body.appendChild(bar);
 function onScroll(){var h=d.documentElement;var p=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);bar.style.transform='scaleX('+p+')'}
 addEventListener('scroll',onScroll,{passive:true});onScroll();
@@ -737,4 +768,4 @@ addEventListener('keydown',function(e){if(e.key==='/'&&!pal.classList.contains('
 })();
 </script>
 </body>
-  </html>
+</html>
