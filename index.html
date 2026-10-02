@@ -200,7 +200,6 @@ mark.hl{background:var(--gold-soft);color:inherit;border-radius:3px}
     <div class="ins g"><b>Insight · trust</b><span>Crisis safety runs before every gate. Where documents disagree, the code wins.</span></div>
   </div>
   <div class="explore" aria-label="Jump to a topic"><button data-go="#modes">Meet the 3 modes</button><button data-go="#elysium">See the emotion engine</button><button data-go="#membrane">How memory works</button><button data-go="#limits">Spend ceiling</button><button data-go="#status">What ships next</button></div>
-  <p>Live data in the open-beta export (<code>Shay_Open_Beta_DB_1</code>): 14 users, 897 long-term memories, 841 live chat rows plus 1,206 archived, 127 global memories, 276 self-insights and 61 pending proactive messages.</p>
 </section>
 
 <!-- 02 -->
@@ -497,7 +496,7 @@ mood      = urgent | focused | bright | playful | gentle | calm | warm | concern
   <div class="scroll"><table>
     <tr><th>Component</th><th>What improved in MEMBRANE 14</th></tr>
     <tr><td>Turn Ledger <span class="tag new">new</span></td><td>Thinking/Intimate turns saved server-side with ids <code>&lt;turnId&gt;:u/:a</code> before the reply returns; a routing-only turn record (no text) in cache; follow-up claims the turn id so replays do nothing; recall counters deferred to the follow-up</td></tr>
-    <tr><td>Semantic recall <span class="tag up">live</span></td><td><code>gemini-embedding-001</code> replaced the shut-down model; 0 of 897 memories had vectors before; nightly backfill now embeds in batches of up to 50</td></tr>
+    <tr><td>Semantic recall <span class="tag up">live</span></td><td><code>gemini-embedding-001</code> replaced the shut-down model; memory vectors were absent before the fix; nightly backfill now embeds in batches of up to 50</td></tr>
     <tr><td>Recent turns</td><td>Tail read of CHATLOGS, owner checked before decrypting; only returned rows are decrypted</td></tr>
     <tr><td>Long-term memory</td><td>User rows filtered before parse; every memory scored once (same ranking); dedupe decrypts only the user's MEMORY_TEXT</td></tr>
     <tr><td>Global Memory</td><td>Ranking rows cached 5 minutes, invalidated on admin writes; both <code>active</code> and <code>pinned</code> rows kept</td></tr>
@@ -581,25 +580,25 @@ mood      = urgent | focused | bright | playful | gentle | calm | warm | concern
   <h2><span class="n">13</span>Data model</h2>
   <p class="point">Google Sheets is the database: one tab per concern, archive twins for anything that grows, and conversation text encrypted in place.</p>
   <div class="scroll"><table>
-    <tr><th>Tab</th><th>Rows (export)</th><th>Holds</th></tr>
-    <tr><td>USERS</td><td class="num">14</td><td>Account, role, plan, encrypted profile memory</td></tr>
-    <tr><td>CHATLOGS · _ARCHIVE</td><td class="num">841 · 1,206</td><td>Encrypted turns, cluster, image id; 150 per user kept live</td></tr>
-    <tr><td>MEMORY · _ARCHIVE</td><td class="num">897 · 0</td><td>Encrypted long-term memories, scores, embeddings</td></tr>
-    <tr><td>GLOBAL_MEMORY</td><td class="num">127</td><td>Admin truths (active + pinned)</td></tr>
-    <tr><td>SELF_INSIGHTS</td><td class="num">276</td><td>Anonymized style insights</td></tr>
-    <tr><td>SESSIONS · EMOTIONS</td><td class="num">9 · 14</td><td>Session summary per user; Elysium X20 state per user</td></tr>
-    <tr><td>EMOTION_LOGS · _ARCHIVE</td><td class="num">0 · 82</td><td>Per-turn emotion snapshots</td></tr>
-    <tr><td>SESSION_LIMITS</td><td class="num">49</td><td>Window counters per user per mode</td></tr>
-    <tr><td>API_USAGE · _ARCHIVE</td><td class="num">220 · 491</td><td>Per-attempt log; daily rollups</td></tr>
-    <tr><td>LIGHTNING_CACHE · LIGHTNING_FLUSH</td><td class="num">0 · 17</td><td>Rolling Lightning context; flush log</td></tr>
-    <tr><td>IMAGES · IMAGE_RECALL_LOG</td><td class="num">10 · 3</td><td>Encrypted photos with captions; recall history</td></tr>
-    <tr><td>PENDING_MESSAGES · FAILED_REPLIES</td><td class="num">61 · 0</td><td>Proactive and retry queues</td></tr>
-    <tr><td>COVENANT · DISENGAGEMENT · RECONCILIATION</td><td class="num">9 · 1 · 1</td><td>Trust ledger; free-will locks</td></tr>
-    <tr><td>STREAKS · TIMELINE_EVENTS · REACTIONS</td><td class="num">9 · 12 · 20</td><td>Relationship features</td></tr>
-    <tr><td>SHARED_MEMORY · PRIVACY_SHIELD</td><td class="num">2 · 2</td><td>Cross-user safe facts; shield opt-ins</td></tr>
-    <tr><td>VOICE_NOTE_USAGE · EMAIL_NOTIFY_LOG</td><td class="num">31 · 11</td><td>Voice quota; email log</td></tr>
-    <tr><td>CRISIS_LOG · BAROMETER</td><td class="num">0 · 0</td><td>Safety event log; trend check-ins</td></tr>
-    <tr><td>PLAN_AUDIT · OTPS · TEST_RESULTS</td><td class="num">8 · 6 · 4</td><td>Plan changes; password resets; test runs</td></tr>
+    <tr><th>Tab</th><th>Data held</th></tr>
+    <tr><td>USERS</td><td>Account, role, plan, encrypted profile memory</td></tr>
+    <tr><td>CHATLOGS · _ARCHIVE</td><td>Encrypted turns, cluster, image id; 150 per user kept live</td></tr>
+    <tr><td>MEMORY · _ARCHIVE</td><td>Encrypted long-term memories, scores, embeddings</td></tr>
+    <tr><td>GLOBAL_MEMORY</td><td>Admin truths (active + pinned)</td></tr>
+    <tr><td>SELF_INSIGHTS</td><td>Anonymized style insights</td></tr>
+    <tr><td>SESSIONS · EMOTIONS</td><td>Session summary per user; Elysium X20 state per user</td></tr>
+    <tr><td>EMOTION_LOGS · _ARCHIVE</td><td>Per-turn emotion snapshots</td></tr>
+    <tr><td>SESSION_LIMITS</td><td>Window counters per user per mode</td></tr>
+    <tr><td>API_USAGE · _ARCHIVE</td><td>Per-attempt log; daily rollups</td></tr>
+    <tr><td>LIGHTNING_CACHE · LIGHTNING_FLUSH</td><td>Rolling Lightning context; flush log</td></tr>
+    <tr><td>IMAGES · IMAGE_RECALL_LOG</td><td>Encrypted photos with captions; recall history</td></tr>
+    <tr><td>PENDING_MESSAGES · FAILED_REPLIES</td><td>Proactive and retry queues</td></tr>
+    <tr><td>COVENANT · DISENGAGEMENT · RECONCILIATION</td><td>Trust ledger; free-will locks</td></tr>
+    <tr><td>STREAKS · TIMELINE_EVENTS · REACTIONS</td><td>Relationship features</td></tr>
+    <tr><td>SHARED_MEMORY · PRIVACY_SHIELD</td><td>Cross-user safe facts; shield opt-ins</td></tr>
+    <tr><td>VOICE_NOTE_USAGE · EMAIL_NOTIFY_LOG</td><td>Voice quota; email log</td></tr>
+    <tr><td>CRISIS_LOG · BAROMETER</td><td>Safety event log; trend check-ins</td></tr>
+    <tr><td>PLAN_AUDIT · OTPS · TEST_RESULTS</td><td>Plan changes; password resets; test runs</td></tr>
   </table></div>
   <p>Paid spend lives outside the sheet, in Script Properties keys <code>SPEND_yyyyMM_userId</code> (micro-USD), so the schema is unchanged.</p>
 </section>
@@ -651,11 +650,11 @@ mood      = urgent | focused | bright | playful | gentle | calm | warm | concern
 <!-- 16 -->
 <section id="research">
   <h2><span class="n">16</span>Research basis</h2>
-  <p class="point">v134 and v135 were driven by a code-level latency investigation and by measurements from the open-beta database, not by assumption.</p>
+  <p class="point">v134 and v135 were driven by code-level latency investigation and testing, not by assumption.</p>
   <div class="scroll"><table>
     <tr><th>Finding</th><th>Evidence</th><th>Outcome</th></tr>
-    <tr><td>Slow or rate-limited models dominate latency</td><td>Intimate primary Gemma 4 31B averaged 24.9 s per call (max 207 s); utility gpt-oss-20b failed 39% of 6,210 calls</td><td>Cooldowns, budgets, paced paid routing</td></tr>
-    <tr><td>Embeddings were silently dead</td><td>0 of 897 memories had vectors; text-embedding-004 shut down 14 Jan 2026</td><td>gemini-embedding-001, batch backfill</td></tr>
+    <tr><td>Slow or rate-limited models dominate latency</td><td>latency and reliability measurements identified slow or rate-limited primary and utility models</td><td>Cooldowns, budgets, paced paid routing</td></tr>
+    <tr><td>Embeddings were silently dead</td><td>memory vectors were absent before the fix; text-embedding-004 shut down 14 Jan 2026</td><td>gemini-embedding-001, batch backfill</td></tr>
     <tr><td>Serial pre-model calls</td><td>Search decision, cluster, embedding, vision ran one after another</td><td>One fetchAll batch</td></tr>
     <tr><td>Decrypt-before-filter</td><td>Whole CHATLOGS / MEMORY decrypted per read</td><td>Owner filter first; AES ~4.3× faster</td></tr>
     <tr><td>Archive header drift</td><td>CHATLOGS_ARCHIVE had ARCHIVED_AT twice</td><td>Header aligned to 9 columns</td></tr>
@@ -679,24 +678,11 @@ mood      = urgent | focused | bright | playful | gentle | calm | warm | concern
 
 <!-- 18 -->
 <section id="status">
-  <h2><span class="n">18</span>Status and decisions</h2>
-  <p class="point">v135.2 is code-complete and tested; it goes live when the owner deploys it and sets the paid key.</p>
-  <div class="scroll"><table>
-    <tr><th>Item</th><th>Status</th><th>Next step</th></tr>
-    <tr><td>v135.2 deployment</td><td>Built, awaiting deploy</td><td>Replace files, run <code>runAllTests()</code>, Deploy → New version</td></tr>
-    <tr><td><code>GEMINI_PAID_API_KEY</code></td><td>Owner action</td><td>Create in AI Studio, add to Script Properties, run <code>smokeTestPaidKey()</code></td></tr>
-    <tr><td>Cloud billing alert</td><td>Owner action</td><td>Budget = $9.95 × paid users (the ceiling is per user; Google bills per project)</td></tr>
-    <tr><td>Vercel Gateway</td><td>Optional</td><td><code>AI_GATEWAY_API_KEY</code>; decide Intimate access (<code>VERCEL_ALLOW_INTIMATE</code>)</td></tr>
-    <tr><td>Mic bridge</td><td>Pending</td><td>Deploy <code>mic-bridge.html</code> to GitHub Pages; set <code>MIC_BRIDGE_URL</code></td></tr>
-    <tr><td>COVENANT daily bonus</td><td>Known issue</td><td>Compare dates as dates (behaviour change)</td></tr>
-    <tr><td>REVERIE threshold</td><td>Calibrate</td><td>Review 0.88 once real embeddings exist</td></tr>
-    <tr><td>Pacing bands</td><td>Tunable</td><td>Raise <code>PAID_PACE_BANDS</code> / front-load for more premium time; review <code>getPaidSpendReport()</code> mid-month</td></tr>
-    <tr><td>Repo docs</td><td>Out of date</td><td>ARCHITECTURE, MEMORY_SYSTEM, EMOTION_ENGINE describe v128.2; update to v135.2</td></tr>
-    <tr><td>Price assumptions</td><td>Watch</td><td>3.6/3.7 standard prices assumed equal to 3.8; Gemma billed conservatively</td></tr>
-  </table></div>
+  <h2><span class="n">18</span>Project status</h2>
+  <p class="point">Deployment checklists and account-specific operational status are maintained privately and are not included in this public documentation.</p>
 </section>
 
-<footer>Shayari NHE-01 · Companion Model Documentation · v135.2 · compiled 3 Oct 2026 from the Apps Script source, the repository docs and the Shay_Open_Beta_DB_1 export. Where documents disagree, the code wins.</footer>
+<footer>Shayari NHE-01 · Companion Model Documentation · v135.2 · compiled 3 Oct 2026 from the Apps Script source and repository documentation. Where documents disagree, the code wins.</footer>
 </main>
 </div>
 <script>
@@ -751,4 +737,4 @@ addEventListener('keydown',function(e){if(e.key==='/'&&!pal.classList.contains('
 })();
 </script>
 </body>
-</html>
+  </html>
