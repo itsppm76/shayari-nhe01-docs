@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shayari NHE-01 — Companion Model Documentation (v135.2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f0e4;--card:#fbf7ef;--ink:#1d1712;--muted:#6b5f52;--rule:#d8ccb6;--soft:#efe6d6;
+  --accent:#b4462f;--accent-soft:rgba(180,70,47,.10);--jade:#2f6b57;--jade-soft:rgba(47,107,87,.10);
+  --gold:#9a7a2c;--gold-soft:rgba(154,122,44,.12);
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15110e;--card:#1c1713;--ink:#f3ead9;--muted:#b9a98c;--rule:#3a3129;--soft:#231c17;
+  --accent:#e0785f;--accent-soft:rgba(224,120,95,.14);--jade:#8fbfa8;--jade-soft:rgba(143,191,168,.13);--gold:#d9b665;--gold-soft:rgba(217,182,101,.13);}}
+:root[data-theme="dark"]{--bg:#15110e;--card:#1c1713;--ink:#f3ead9;--muted:#b9a98c;--rule:#3a3129;--soft:#231c17;
+  --accent:#e0785f;--accent-soft:rgba(224,120,95,.14);--jade:#8fbfa8;--jade-soft:rgba(143,191,168,.13);--gold:#d9b665;--gold-soft:rgba(217,182,101,.13);}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.62 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr;gap:40px}
+@media(min-width:1100px){.wrap{grid-template-columns:230px minmax(0,1fr)}}
+nav.toc{display:none}
+@media(min-width:1100px){nav.toc{display:block;position:sticky;top:env(safe-area-inset-top,0px);align-self:start;max-height:100vh;overflow:auto;padding:36px 0 40px}}
+nav.toc p{font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li{counter-increment:t;margin:0 0 7px;font-size:13.5px;line-height:1.35}
+nav.toc li a{color:var(--ink);text-decoration:none;display:flex;gap:9px}
+nav.toc li a::before{content:counter(t,decimal-leading-zero);font:500 11px/1.9 var(--mono);color:var(--muted)}
+nav.toc li a:hover{color:var(--accent)}
+main{min-width:0;padding-bottom:80px}
+header.hero{padding:56px 0 36px;border-bottom:1px solid var(--rule);margin-bottom:8px}
+.kicker{font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
+h1{font:800 clamp(40px,7vw,84px)/.95 var(--serif);letter-spacing:-.02em;margin:0 0 18px}
+h1 span{display:block;font-weight:400;font-style:italic;font-size:.42em;letter-spacing:0;color:var(--muted);margin-top:14px;line-height:1.2}
+.lede{font:400 clamp(18px,2.2vw,22px)/1.5 var(--serif);max-width:44em;margin:0 0 26px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;font:500 13px/1.4 var(--mono);color:var(--muted)}
+.meta b{color:var(--ink);font-weight:500}
+section{padding:44px 0 8px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+h2{font:600 clamp(26px,3.4vw,36px)/1.15 var(--serif);margin:0 0 8px;letter-spacing:-.01em}
+h2 .n{font:500 13px/1 var(--mono);color:var(--accent);display:block;margin-bottom:10px;letter-spacing:.06em}
+h3{font:600 19px/1.3 var(--serif);margin:30px 0 10px}
+p{margin:0 0 14px;max-width:72ch}
+.point{font:400 19px/1.5 var(--serif);max-width:60ch;margin:6px 0 20px}
+ul,ol{max-width:72ch;padding-left:22px;margin:0 0 16px}
+li{margin:0 0 6px}
+code,.mono{font:500 .88em/1.4 var(--mono);background:var(--soft);padding:1px 5px;border-radius:4px}
+.scroll{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--rule);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:600 12px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);white-space:nowrap}
+.tag{display:inline-block;font:600 10.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:999px;vertical-align:2px;margin-left:6px}
+.tag.new{background:var(--accent-soft);color:var(--accent)}
+.tag.up{background:var(--jade-soft);color:var(--jade)}
+.tag.flag{background:var(--gold-soft);color:var(--gold)}
+.grid{display:grid;gap:14px;margin:16px 0 24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px 16px 12px}
+.card h4{font:600 15px/1.3 var(--sans);margin:0 0 6px}
+.card p{font-size:14px;margin:0 0 6px;color:var(--muted)}
+.stat{font:800 34px/1 var(--serif);color:var(--ink);margin:0 0 6px}
+.figure{margin:18px 0 26px;background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:14px;overflow-x:auto}
+.figure svg{display:block;width:100%;min-width:640px;height:auto}
+.figcap{font:500 12.5px/1.4 var(--mono);color:var(--muted);margin:10px 4px 2px}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0 20px;max-width:72ch}
+.callout.jade{border-color:var(--jade);background:var(--jade-soft)}
+pre{font:13px/1.55 var(--mono);background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:14px;overflow-x:auto;margin:12px 0 20px}
+/* diagram tokens */
+.d-box{fill:var(--card);stroke:var(--rule);stroke-width:1.4}
+.d-grp{fill:var(--soft);stroke:var(--rule);stroke-width:1.2}
+.d-acc{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.8}
+.d-jade{fill:var(--jade-soft);stroke:var(--jade);stroke-width:1.6}
+.d-gold{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.6}
+.d-t{fill:var(--ink);font:500 13px var(--sans)}
+.d-h{fill:var(--ink);font:600 14px var(--sans)}
+.d-s{fill:var(--muted);font:400 11.5px var(--sans)}
+.d-m{fill:var(--muted);font:500 11px var(--mono)}
+.d-ttl{fill:var(--ink);font:600 16px var(--serif)}
+.d-line{stroke:var(--muted);stroke-width:1.3;fill:none}
+.d-dash{stroke:var(--muted);stroke-width:1.2;fill:none;stroke-dasharray:4 4}
+.d-arrow{fill:var(--muted)}
+footer{padding:40px 0 20px;color:var(--muted);font-size:13px}
+
+/* ---- interactive layer ---- */
+#prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent),var(--gold));z-index:100}
+#hero-cv{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+header.hero{position:relative;overflow:hidden;isolation:isolate}
+header.hero>*{position:relative;z-index:1}
+header.hero>#hero-cv{position:absolute}
+header.hero h1{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+header.hero .kicker{animation:rise .7s .05s both}
+header.hero .lede{animation:rise .9s .2s both}
+header.hero .meta{animation:rise .9s .35s both}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.cursor{display:inline-block;width:.5ch;background:var(--accent);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.card{position:relative;transition:transform .25s ease,border-color .25s,box-shadow .25s;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),var(--accent-soft),transparent 60%);opacity:0;transition:opacity .25s;pointer-events:none}
+.card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 30px -18px var(--accent)}
+.card:hover::after{opacity:1}
+.stat{font-variant-numeric:tabular-nums}
+nav.toc li a{transition:color .2s,transform .2s;border-left:2px solid transparent;padding-left:8px;margin-left:-10px}
+nav.toc li a.on{color:var(--accent);border-left-color:var(--accent);transform:translateX(3px);font-weight:600}
+section h2 .n{position:relative;display:inline-block}
+section h2 .n::after{content:"";display:block;height:2px;width:0;background:var(--accent);margin-top:6px;transition:width .8s .2s}
+section.vis h2 .n::after{width:34px}
+tbody tr,.scroll tr{transition:background .15s}
+.scroll tr:not(:first-child):hover td{background:var(--accent-soft)}
+.figure svg .d-acc,.figure svg .d-gold,.figure svg .d-jade{animation:pulse 3.6s ease-in-out infinite}
+@keyframes pulse{50%{stroke-opacity:.45}}
+.figure svg .d-line,.figure svg .d-dash{stroke-dasharray:6 5;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.figure svg .d-box,.figure svg .d-acc,.figure svg .d-gold,.figure svg .d-jade{transition:transform .2s;transform-box:fill-box;transform-origin:center}
+.figure svg .d-box:hover{transform:scale(1.04);stroke:var(--accent)}
+.insights{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:8px 0 26px}
+.ins{border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--card);border-radius:0 12px 12px 0;padding:14px 16px;cursor:default;transition:transform .2s}
+.ins:hover{transform:translateX(4px)}
+.ins b{display:block;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.ins span{font:400 15px/1.45 var(--serif)}
+.ins.j{border-left-color:var(--jade)}.ins.j b{color:var(--jade)}
+.ins.g{border-left-color:var(--gold)}.ins.g b{color:var(--gold)}
+.explore{margin:6px 0 26px;display:flex;flex-wrap:wrap;gap:8px}
+.explore button,.fab{font:500 13px var(--mono);color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:999px;padding:8px 14px;cursor:pointer;transition:all .2s}
+.explore button:hover,.fab:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.dock{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;z-index:90}
+.fab{box-shadow:0 8px 24px -10px rgba(0,0,0,.4)}
+#pal{position:fixed;inset:0;background:rgba(10,8,6,.6);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding-top:12vh;z-index:200}
+#pal.open{display:flex}
+#pal .box{width:min(560px,92vw);background:var(--card);border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+#pal input{width:100%;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);font:500 16px var(--sans);padding:16px;outline:0}
+#pal ul{list-style:none;margin:0;padding:6px;max-height:50vh;overflow:auto;max-width:none}
+#pal li{margin:0}
+#pal li a{display:flex;gap:12px;padding:10px 12px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
+#pal li a.sel,#pal li a:hover{background:var(--accent-soft);color:var(--accent)}
+#pal li a i{font:500 11px/1.8 var(--mono);color:var(--muted);font-style:normal}
+mark.hl{background:var(--gold-soft);color:inherit;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#glance">At a glance</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#workflow">Turn workflow</a></li>
+    <li><a href="#modes">Modes &amp; session limits</a></li>
+    <li><a href="#models">LLM models &amp; routing</a></li>
+    <li><a href="#limits">Rate limits &amp; spend ceiling</a></li>
+    <li><a href="#elysium">Elysium X20 emotion engine</a></li>
+    <li><a href="#membrane">MEMBRANE 14 memory</a></li>
+    <li><a href="#safety">Safety, privacy, governance</a></li>
+    <li><a href="#features">Features &amp; characteristics</a></li>
+    <li><a href="#api">API &amp; tool calling</a></li>
+    <li><a href="#data">Data model</a></li>
+    <li><a href="#journey">User journey</a></li>
+    <li><a href="#design">Product design &amp; UX</a></li>
+    <li><a href="#research">Research basis</a></li>
+    <li><a href="#improved">What was improved</a></li>
+    <li><a href="#status">Status &amp; decisions</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="hero">
+  <p class="kicker">OpenNHE Research Wing · Writistic Studios LLP · Algotheorem</p>
+  <h1>Shayari NHE-01<span>Companion Model Documentation · build v135.2</span></h1>
+  <p class="lede">A fully disclosed Non-Human Entity companion that remembers you across sessions, carries a persistent emotional state, puts crisis safety before every gate, and can choose to step back from a conversation — running entirely on Google Apps Script and Google Sheets.</p>
+  <div class="meta"><span>Updated <b>3 Oct 2026</b></span><span>Build <b>v135.2</b> (code) · repo backup <b>v133</b></span><span><b>38</b> server modules + <b>index.html</b></span><span>Tests <b>63 / 63</b></span><span>Lead · <b>Pratham Prateek Mohanty</b></span></div>
+</header>
+
+<!-- 01 -->
+<section id="glance">
+  <h2><span class="n">01</span>At a glance</h2>
+  <p class="point">Shayari NHE-01 is a governed AI companion with three conversational depths, a 20-axis emotion engine and a 14-component memory system. Since v135 it routes free and paid users through separate model pools under a hard $9.95 monthly spend ceiling per paid user.</p>
+  <div class="grid">
+    <div class="card"><p class="stat">3</p><h4>Modes</h4><p>Lightning, Thinking, Intimate — one shared chat thread.</p></div>
+    <div class="card"><p class="stat">20</p><h4>Emotion axes</h4><p>Elysium X20, updated every turn with local math, no API call.</p></div>
+    <div class="card"><p class="stat">14</p><h4>Memory components</h4><p>MEMBRANE 14, encrypted at rest, semantic recall live.</p></div>
+    <div class="card"><p class="stat">17</p><h4>Paid-tier models</h4><p>Google AI Studio Tier 1, paced across five levels.</p></div>
+    <div class="card"><p class="stat">5</p><h4>Subscription tiers</h4><p>FREE · PRIME · PRIME MAX · ULTIMATE · ULTIMATE MAX.</p></div>
+    <div class="card"><p class="stat">$9.95</p><h4>Spend ceiling</h4><p>Per paid user per month, enforced by a live ledger.</p></div>
+  </div>
+
+  <div class="insights">
+    <div class="ins"><b>Insight · cost</b><span>Spend is capped per paid user at <em>$9.95 a month</em> by a live ledger, but Google bills per project, so the cloud budget alert must be $9.95 times paid users.</span></div>
+    <div class="ins j"><b>Insight · cost of thinking</b><span>Emotion updates run on local math with no API call, so the 20-axis state is updated every turn at zero model cost.</span></div>
+    <div class="ins g"><b>Insight · trust</b><span>Crisis safety runs before every gate. Where documents disagree, the code wins.</span></div>
+  </div>
+  <div class="explore" aria-label="Jump to a topic"><button data-go="#modes">Meet the 3 modes</button><button data-go="#elysium">See the emotion engine</button><button data-go="#membrane">How memory works</button><button data-go="#limits">Spend ceiling</button><button data-go="#status">What ships next</button></div>
+  <p>Live data in the open-beta export (<code>Shay_Open_Beta_DB_1</code>): 14 users, 897 long-term memories, 841 live chat rows plus 1,206 archived, 127 global memories, 276 self-insights and 61 pending proactive messages.</p>
+</section>
+
+<!-- 02 -->
+<section id="architecture">
+  <h2><span class="n">02</span>Architecture</h2>
+  <p class="point">One Apps Script project is the whole backend: the browser calls server functions, the server reads and writes one bound Google Sheet, and every model call leaves through a router that picks the free pool or the paid key by the user's plan.</p>
+  <div class="figure">
+  <svg viewBox="0 0 900 600" role="img" aria-label="System architecture: clients, Apps Script modules, Google Sheet, model providers">
+    <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+    <text x="20" y="28" class="d-ttl">One Apps Script project is the whole backend</text>
+    <!-- clients -->
+    <rect x="20" y="56" width="180" height="404" rx="12" class="d-grp"/>
+    <text x="36" y="82" class="d-h">Clients</text>
+    <rect x="34" y="96" width="152" height="70" rx="9" class="d-box"/><text x="46" y="120" class="d-t">Web app</text><text x="46" y="138" class="d-s">index.html via HtmlService</text><text x="46" y="154" class="d-s">PWA-style chat UI</text>
+    <rect x="34" y="178" width="152" height="56" rx="9" class="d-box"/><text x="46" y="202" class="d-t">Android shell</text><text x="46" y="220" class="d-s">WebView wrapper</text>
+    <rect x="34" y="246" width="152" height="56" rx="9" class="d-box"/><text x="46" y="270" class="d-t">Desktop</text><text x="46" y="288" class="d-s">Electron · Win/macOS/Linux</text>
+    <rect x="34" y="314" width="152" height="70" rx="9" class="d-gold"/><text x="46" y="338" class="d-t">mic-bridge.html</text><text x="46" y="356" class="d-s">GitHub Pages popup</text><text x="46" y="372" class="d-s">records audio → postMessage</text>
+    <text x="36" y="410" class="d-m">google.script.run</text><text x="36" y="428" class="d-m">7-day sliding session</text>
+    <!-- core -->
+    <rect x="240" y="56" width="420" height="390" rx="12" class="d-grp"/>
+    <text x="256" y="82" class="d-h">Google Apps Script · V8 runtime</text>
+    <rect x="256" y="96" width="190" height="96" rx="9" class="d-acc"/><text x="268" y="120" class="d-t">Turn &amp; router</text><text x="268" y="138" class="d-s">gemini.gs · chat.gs</text><text x="268" y="154" class="d-s">commands.gs · billing.gs</text><text x="268" y="170" class="d-s">vercel_gateway.gs</text>
+    <rect x="456" y="96" width="190" height="96" rx="9" class="d-box"/><text x="468" y="120" class="d-t">Safety &amp; governance</text><text x="468" y="138" class="d-s">lifeline · privacy_shield</text><text x="468" y="154" class="d-s">free_will · covenant</text><text x="468" y="170" class="d-s">encryption · crypto_aes</text>
+    <rect x="256" y="204" width="190" height="96" rx="9" class="d-box"/><text x="268" y="228" class="d-t">MEMBRANE 14</text><text x="268" y="246" class="d-s">memory · embeddings</text><text x="268" y="262" class="d-s">global / shared memory</text><text x="268" y="278" class="d-s">constellation · visual_recall</text>
+    <rect x="456" y="204" width="190" height="96" rx="9" class="d-box"/><text x="468" y="228" class="d-t">Elysium X20</text><text x="468" y="246" class="d-s">emotion · barometer</text><text x="468" y="262" class="d-s">personality_growth</text><text x="468" y="278" class="d-s">relationship_timeline</text>
+    <rect x="256" y="312" width="190" height="96" rx="9" class="d-box"/><text x="268" y="336" class="d-t">Senses &amp; proactive</text><text x="268" y="354" class="d-s">vision · voice · voice_duet</text><text x="268" y="370" class="d-s">proactive · email_notify</text><text x="268" y="386" class="d-s">reactions · triggers</text>
+    <rect x="456" y="312" width="190" height="96" rx="9" class="d-box"/><text x="468" y="336" class="d-t">Accounts &amp; ops</text><text x="468" y="354" class="d-s">auth · admin · utils</text><text x="468" y="370" class="d-s">optimisation · data_access</text><text x="468" y="386" class="d-s">self_improvement · test_suite</text>
+    <text x="256" y="432" class="d-m">38 .gs modules · ~13.9k lines · executes as deployer</text>
+    <!-- sheet -->
+    <rect x="240" y="478" width="420" height="96" rx="12" class="d-jade"/>
+    <text x="256" y="504" class="d-h">Bound Google Sheet · 38 tabs</text>
+    <text x="256" y="524" class="d-s">USERS · CHATLOGS · MEMORY · GLOBAL_MEMORY · SESSIONS · EMOTIONS</text>
+    <text x="256" y="542" class="d-s">SESSION_LIMITS · API_USAGE · IMAGES · COVENANT · *_ARCHIVE …</text>
+    <text x="256" y="560" class="d-s">conversation text encrypted at rest (ENC1: AES-256-CBC + HMAC)</text>
+    <!-- providers -->
+    <rect x="700" y="56" width="180" height="176" rx="12" class="d-box"/>
+    <text x="714" y="82" class="d-h">FREE pool</text><text x="714" y="102" class="d-s">FREE users + system jobs</text>
+    <text x="714" y="126" class="d-t">Groq</text><text x="714" y="146" class="d-t">Gemini keys 1–4</text><text x="714" y="166" class="d-t">NVIDIA</text><text x="714" y="186" class="d-t">OpenRouter</text><text x="714" y="206" class="d-t">Vercel AI Gateway</text>
+    <rect x="700" y="246" width="180" height="104" rx="12" class="d-acc"/>
+    <text x="714" y="272" class="d-h">PAID key</text><text x="714" y="292" class="d-s">GEMINI_PAID_API_KEY</text><text x="714" y="310" class="d-s">AI Studio Tier 1 · 17 models</text><text x="714" y="328" class="d-s">$9.95 / user / month ledger</text>
+    <rect x="700" y="364" width="180" height="96" rx="12" class="d-box"/>
+    <text x="714" y="390" class="d-h">Other services</text><text x="714" y="410" class="d-s">ElevenLabs (voice notes)</text><text x="714" y="428" class="d-s">DuckDuckGo · Wikipedia</text><text x="714" y="446" class="d-s">Gmail (OTP, notify)</text>
+    <!-- connectors -->
+    <path d="M200 250H240" class="d-line" marker-end="url(#a1)"/>
+    <path d="M450 446V478" class="d-line" marker-end="url(#a1)"/>
+    <path d="M660 144H700" class="d-line" marker-end="url(#a1)"/>
+    <path d="M660 298H700" class="d-line" marker-end="url(#a1)"/>
+    <path d="M660 412H700" class="d-line" marker-end="url(#a1)"/>
+  </svg>
+  <p class="figcap">architecture · clients → Apps Script → Sheet, with plan-based model routing</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="technology">
+  <h2><span class="n">03</span>Technology</h2>
+  <p class="point">The stack is deliberately constrained: Apps Script V8 only, Google Sheets as the database, no npm dependencies, no paid infrastructure beyond model usage.</p>
+  <div class="scroll"><table>
+    <tr><th>Layer</th><th>Technology</th><th>Notes</th></tr>
+    <tr><td>Runtime</td><td>Google Apps Script, V8</td><td>Web app executes as deployer; timezone Asia/Kolkata; parallel HTTP via <code>UrlFetchApp.fetchAll</code></td></tr>
+    <tr><td>Frontend</td><td>Single <code>index.html</code> (~3,700 lines)</td><td>Served by HtmlService; Android WebView and Electron shells wrap the same web app</td></tr>
+    <tr><td>Database</td><td>Bound Google Sheet, 38 tabs</td><td>Archive twins keep hot tabs small; nightly maintenance compacts</td></tr>
+    <tr><td>Fast state</td><td>CacheService, PropertiesService</td><td>Rate counters, cooldowns, turn records, search cache (cache); keys and the spend ledger (properties)</td></tr>
+    <tr><td>Concurrency</td><td>LockService</td><td>Multi-row API_USAGE writes, spend ledger, pending messages, reactions</td></tr>
+    <tr><td>Encryption</td><td>Pure-JS AES-256-CBC + native HMAC-SHA256</td><td><code>ENC1:</code> format, encrypt-then-MAC, key in Script Properties; v134 table-driven, ~4.3× faster</td></tr>
+    <tr><td>Models</td><td>Gemini / Gemma, Groq, NVIDIA, OpenRouter, Vercel AI Gateway</td><td>Free pool for FREE users; one Gemini Tier-1 key for paid users</td></tr>
+    <tr><td>Embeddings</td><td><code>gemini-embedding-001</code>, 768 dims</td><td>Replaced <code>text-embedding-004</code> (shut down 14 Jan 2026)</td></tr>
+    <tr><td>Voice</td><td>ElevenLabs TTS; Gemini audio transcription</td><td>Mic capture through a GitHub Pages popup (iframe blocks getUserMedia)</td></tr>
+    <tr><td>Search</td><td>DuckDuckGo HTML + Wikipedia API</td><td>Fetched in parallel, 8 s deadline, 10-minute cache</td></tr>
+  </table></div>
+</section>
+
+<!-- 04 -->
+<section id="workflow">
+  <h2><span class="n">04</span>Turn workflow</h2>
+  <p class="point">Every message runs the same ordered pipeline: safety first, gates second, all independent network work in one parallel batch, then the reply model, then a server-side save before the reply returns.</p>
+  <div class="figure">
+  <svg viewBox="0 0 900 470" role="img" aria-label="Turn pipeline from request to reply and follow-up">
+    <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+    <text x="20" y="28" class="d-ttl">Safety first, one parallel batch, saved before the reply returns</text>
+    <!-- row 1 -->
+    <rect x="20" y="56" width="190" height="78" rx="10" class="d-box"/><text x="34" y="80" class="d-m">01</text><text x="34" y="100" class="d-t">Load turn context</text><text x="34" y="118" class="d-s">one USERS read · billing ctx</text>
+    <rect x="245" y="56" width="190" height="78" rx="10" class="d-box"/><text x="259" y="80" class="d-m">02</text><text x="259" y="100" class="d-t">Privacy Shield</text><text x="259" y="118" class="d-s">opt-in PII stripping</text>
+    <rect x="470" y="56" width="190" height="78" rx="10" class="d-acc"/><text x="484" y="80" class="d-m">03</text><text x="484" y="100" class="d-t">LIFELINE</text><text x="484" y="118" class="d-s">crisis check before any gate</text>
+    <rect x="695" y="56" width="185" height="78" rx="10" class="d-box"/><text x="709" y="80" class="d-m">04</text><text x="709" y="100" class="d-t">Gates</text><text x="709" y="118" class="d-s">lock · plan · limit · budget</text>
+    <!-- row 2 -->
+    <rect x="695" y="186" width="185" height="78" rx="10" class="d-box"/><text x="709" y="210" class="d-m">05</text><text x="709" y="230" class="d-t">Command / identity</text><text x="709" y="248" class="d-s">no reads unless a command</text>
+    <rect x="470" y="186" width="190" height="78" rx="10" class="d-jade"/><text x="484" y="210" class="d-m">06</text><text x="484" y="230" class="d-t">One fetchAll batch</text><text x="484" y="248" class="d-s">search · cluster · embed · vision</text>
+    <rect x="245" y="186" width="190" height="78" rx="10" class="d-box"/><text x="259" y="210" class="d-m">07</text><text x="259" y="230" class="d-t">Prompt build</text><text x="259" y="248" class="d-s">Elysium X20 + MEMBRANE 14</text>
+    <rect x="20" y="186" width="190" height="78" rx="10" class="d-jade"/><text x="34" y="210" class="d-m">08</text><text x="34" y="230" class="d-t">Router</text><text x="34" y="248" class="d-s">plan → pool → paced model</text>
+    <!-- row 3 -->
+    <rect x="20" y="316" width="190" height="78" rx="10" class="d-box"/><text x="34" y="340" class="d-m">09</text><text x="34" y="360" class="d-t">Reply shaping</text><text x="34" y="378" class="d-s">disengage · covenant · DTX</text>
+    <rect x="245" y="316" width="190" height="78" rx="10" class="d-box"/><text x="259" y="340" class="d-m">10</text><text x="259" y="360" class="d-t">Save turn</text><text x="259" y="378" class="d-s">encrypted · ids :u / :a</text>
+    <rect x="470" y="316" width="190" height="78" rx="10" class="d-acc"/><text x="484" y="340" class="d-m">11</text><text x="484" y="360" class="d-t">Return reply</text><text x="484" y="378" class="d-s">+ session &amp; lock status</text>
+    <rect x="695" y="316" width="185" height="78" rx="10" class="d-box"/><text x="709" y="340" class="d-m">12</text><text x="709" y="360" class="d-t">Follow-up</text><text x="709" y="378" class="d-s">memories · summary · react</text>
+    <!-- arrows -->
+    <path d="M210 95H245" class="d-line" marker-end="url(#a2)"/><path d="M435 95H470" class="d-line" marker-end="url(#a2)"/><path d="M660 95H695" class="d-line" marker-end="url(#a2)"/>
+    <path d="M787 134V186" class="d-line" marker-end="url(#a2)"/>
+    <path d="M695 225H660" class="d-line" marker-end="url(#a2)"/><path d="M470 225H435" class="d-line" marker-end="url(#a2)"/><path d="M245 225H210" class="d-line" marker-end="url(#a2)"/>
+    <path d="M115 264V316" class="d-line" marker-end="url(#a2)"/>
+    <path d="M210 355H245" class="d-line" marker-end="url(#a2)"/><path d="M435 355H470" class="d-line" marker-end="url(#a2)"/><path d="M660 355H695" class="d-line" marker-end="url(#a2)"/>
+    <path d="M565 134C565 160 600 160 640 160H760" class="d-dash"/>
+    <text x="570" y="176" class="d-s">crisis turn: gates stand down, never counted</text>
+    <text x="20" y="428" class="d-s">Thinking / Intimate: steps 06–12 as shown. Lightning: batch holds only search (on a live-data cue) and vision; context = global memory + 10-turn cache.</text>
+    <text x="20" y="448" class="d-s">Follow-up (step 12) is idempotent per turn id, reads the server-saved text, and takes admin rights from USERS — never from the browser.</text>
+  </svg>
+  <p class="figcap">askShayari() pipeline · v134 order, unchanged gate sequence</p>
+  </div>
+  <h3>Response contract</h3>
+  <p>Every turn returns JSON <code>{ reply, parts, meta }</code>. <code>meta</code> carries <code>activeClusterId</code>, <code>clusterMeta</code>, <code>isAdmin</code>, <code>username</code>, <code>cotTurnId</code>, <code>disengaged</code>, <code>crisis</code>, <code>mood</code>, <code>valence</code>, <code>arousal</code>, <code>imageId</code>, <code>imageError</code>, and since v134 <code>sessionStatus</code> and <code>lockStatus</code>. Gate responses set <code>planGate</code>, <code>limitReached</code> (with <code>resetsAtMs</code>) or, since v135, <code>budgetReached</code>. Slash commands return plain text.</p>
+</section>
+
+<!-- 05 -->
+<section id="modes">
+  <h2><span class="n">05</span>Modes and session limits</h2>
+  <p class="point">Three depths share one ordered chat thread; deeper modes see more of MEMBRANE 14 and are reserved for higher tiers. Paid tiers trade Lightning volume for full Thinking and Intimate quotas.</p>
+  <div class="scroll"><table>
+    <tr><th>Mode</th><th>Purpose</th><th>Context she gets</th><th>Plans</th></tr>
+    <tr><td><b>Lightning</b></td><td>Fast, light replies</td><td>Global memory + rolling 10-turn Lightning cache; covenant + jealousy directives</td><td>All</td></tr>
+    <tr><td><b>Thinking</b></td><td>Considered conversation</td><td>+ profile memory, session summary, 5 recent turns, emotion directive, self-insights</td><td>PRIME, PRIME MAX, ULTIMATE, ULTIMATE MAX</td></tr>
+    <tr><td><b>Intimate</b></td><td>Deepest, most personal</td><td>+ top-6 scored long-term memories, semantic recall, REVERIE, visual recall</td><td>ULTIMATE, ULTIMATE MAX</td></tr>
+  </table></div>
+  <h3>Session limits (v135.2, <code>PLAN_SESSION_LIMITS</code>)</h3>
+  <div class="scroll"><table>
+    <tr><th>Tier</th><th>Lightning</th><th>Thinking</th><th>Intimate</th><th>Best paid model</th></tr>
+    <tr><td>FREE</td><td class="num">10 / 24h</td><td>locked</td><td>locked</td><td>— (free pool)</td></tr>
+    <tr><td>PRIME</td><td class="num">5 / 24h</td><td class="num">15 / 6h</td><td>locked</td><td>Gemini 3 Flash</td></tr>
+    <tr><td>PRIME MAX</td><td class="num">5 / 24h</td><td class="num">20 / 2h</td><td>locked</td><td>Gemini 3.8 Flash</td></tr>
+    <tr><td>ULTIMATE</td><td class="num">5 / 24h</td><td class="num">15 / 6h</td><td class="num">30 / 8h</td><td>Gemini 3.8 Flash</td></tr>
+    <tr><td>ULTIMATE MAX</td><td class="num">5 / 24h</td><td class="num">15 / 6h</td><td class="num">50 / 6h</td><td>Gemini 3.1 Pro (Intimate)</td></tr>
+  </table></div>
+  <ul>
+    <li>Windows roll per user per mode; an expired window resets on the next message. The client shows a live countdown.</li>
+    <li>LIFELINE crisis turns never consume a message and are never blocked by plan, limit, lock or budget.</li>
+    <li>Other per-user caps: images 15/day, voice notes 8/day (ElevenLabs), 36,000-character encrypted image cells.</li>
+    <li>Upgrades link to Patreon; <code>index.html</code> mirrors the limits table for display.</li>
+  </ul>
+</section>
+
+<!-- 06 -->
+<section id="models">
+  <h2><span class="n">06</span>LLM models and routing</h2>
+  <p class="point">FREE users and system jobs use the free key pool; paid users use one Google AI Studio key routed across 17 models, with budget pacing deciding how high each turn starts.</p>
+  <h3>Free pool chains (FREE tier)</h3>
+  <div class="scroll"><table>
+    <tr><th>Chain</th><th>Order (first available wins)</th></tr>
+    <tr><td>Lightning</td><td>gpt-oss-20b (Groq) → Gemini 2.5 Flash-Lite → 2.5 Flash → 3.5 Flash → 3 Flash → Kimi K2.6 → Moonshot v1-8k (OpenRouter free)</td></tr>
+    <tr><td>Thinking</td><td>gpt-oss-120b (Groq) → Gemma 4 26B → Qwen 3.6 27B → Gemma 4 31B → Nemotron 3 Ultra (NVIDIA) → Nemotron (OpenRouter) → Kimi K2.6 → Gemini 3.1 Flash-Lite</td></tr>
+    <tr><td>Intimate</td><td>Gemma 4 31B → gpt-oss-120b → Nemotron (NVIDIA) → Gemma 4 26B → Qwen 3.6 27B → Nemotron (OpenRouter) → Kimi K2.6</td></tr>
+    <tr><td>Utility</td><td>gpt-oss-20b → gpt-oss-120b → Qwen 3.6 27B → Gemma 4 26B → Moonshot → Nemotron (NVIDIA) → Nemotron (OpenRouter)</td></tr>
+    <tr><td>Last tier</td><td>Vercel AI Gateway (<code>vercel:openai/gpt-oss-20b</code> / <code>-120b</code>), only when <code>AI_GATEWAY_API_KEY</code> is set; Intimate gated off by default</td></tr>
+  </table></div>
+  <h3>Paid key: five levels, paced per user</h3>
+  <div class="figure">
+  <svg viewBox="0 0 900 380" role="img" aria-label="Paid routing levels from Pro to Economy with pacing">
+    <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+    <text x="20" y="28" class="d-ttl">Under pace starts high; running hot steps down — failures always fall to cheaper models</text>
+    <rect x="20" y="56" width="160" height="150" rx="10" class="d-acc"/><text x="34" y="80" class="d-h">Pro</text><text x="34" y="100" class="d-s">3.1 Pro</text><text x="34" y="116" class="d-s">2.5 Pro</text><text x="34" y="178" class="d-m">ULTI MAX Intimate</text><text x="34" y="194" class="d-m">pace ratio &lt; 0.50</text>
+    <rect x="196" y="76" width="160" height="150" rx="10" class="d-gold"/><text x="210" y="100" class="d-h">Premium</text><text x="210" y="120" class="d-s">3.8 · 3.7 · 3.6 Flash</text><text x="210" y="136" class="d-s">3.5 Flash</text><text x="210" y="198" class="d-m">MAX + ULTIMATE</text><text x="210" y="214" class="d-m">ratio &lt; 0.85</text>
+    <rect x="372" y="96" width="160" height="150" rx="10" class="d-box"/><text x="386" y="120" class="d-h">Standard</text><text x="386" y="140" class="d-s">3 Flash · 2.5 Flash</text><text x="386" y="156" class="d-s">3.5 Flash-Lite</text><text x="386" y="218" class="d-m">PRIME best level</text><text x="386" y="234" class="d-m">ratio &lt; 1.00</text>
+    <rect x="548" y="116" width="160" height="150" rx="10" class="d-box"/><text x="562" y="140" class="d-h">Lite</text><text x="562" y="160" class="d-s">3.1 Flash-Lite</text><text x="562" y="176" class="d-s">2.5 Flash-Lite</text><text x="562" y="238" class="d-m">Lightning · utility</text><text x="562" y="254" class="d-m">ratio &lt; 1.20</text>
+    <rect x="724" y="136" width="156" height="150" rx="10" class="d-jade"/><text x="738" y="160" class="d-h">Economy</text><text x="738" y="180" class="d-s">2.0 Flash-Lite · 2.0 Flash</text><text x="738" y="196" class="d-s">Gemma 4 26B · 31B</text><text x="738" y="258" class="d-m">≥ 85% of ceiling</text><text x="738" y="274" class="d-m">or ratio ≥ 1.20</text>
+    <path d="M180 140H196" class="d-line" marker-end="url(#a3)"/><path d="M356 160H372" class="d-line" marker-end="url(#a3)"/><path d="M532 180H548" class="d-line" marker-end="url(#a3)"/><path d="M708 200H724" class="d-line" marker-end="url(#a3)"/>
+    <rect x="20" y="306" width="860" height="58" rx="10" class="d-grp"/>
+    <text x="34" y="330" class="d-t">pace ratio = spent ÷ (ceiling × (0.10 + 0.90 × fraction of month elapsed))</text>
+    <text x="34" y="350" class="d-s">level = lower of the plan's best level for the mode and the pace level · hard stop at $9.95 (crisis exempt, economy only)</text>
+  </svg>
+  <p class="figcap">paid routing · PAID_LEVEL_MODELS, PAID_MODE_MAX_LEVEL, PAID_PACE_BANDS in billing.gs</p>
+  </div>
+  <div class="scroll"><table>
+    <tr><th>Paid use</th><th>Chain</th></tr>
+    <tr><td>Thinking / Intimate</td><td>Starts at the paced level, descends through every cheaper level</td></tr>
+    <tr><td>Lightning / utility</td><td>Lite → Economy (3.1 Flash-Lite first)</td></tr>
+    <tr><td>Vision</td><td>3.1 Flash-Lite → 3.5 Flash-Lite → 2.5 Flash → 3.8 Flash (free: 2.5 Flash → 2.5 Flash-Lite → 3.5 Flash)</td></tr>
+    <tr><td>Voice transcription</td><td>3.1 Flash-Lite → 2.5 Flash-Lite → 2.5 Flash</td></tr>
+    <tr><td>Embeddings</td><td><code>gemini-embedding-001</code> on both pools so stored vectors stay comparable</td></tr>
+  </table></div>
+  <p>Simulated months (2027 prices): a light ULTIMATE MAX user (15 Intimate turns/day) runs 93% Premium and 7% Pro; a regular user (40/day) runs mostly Standard; a heavy user (130/day) mostly Lite. PRIME at 30/day stays 100% on its best level.</p>
+</section>
+
+<!-- 07 -->
+<section id="limits">
+  <h2><span class="n">07</span>Rate limits and the spend ceiling</h2>
+  <p class="point">Provider rate limits steer the router; the per-user monthly ledger guarantees cost. Neither ever produces a user-visible error on its own — the router simply moves to the next model.</p>
+  <h3>Paid key · Google AI Studio Tier 1</h3>
+  <div class="scroll"><table>
+    <tr><th>Model</th><th>RPM</th><th>RPD</th><th>USD / 1M in · out</th></tr>
+    <tr><td>gemini-3.8 / 3.7 / 3.6-flash</td><td class="num">1,000</td><td class="num">10,000</td><td class="num">0.75 · 3.75 intro to 31 Dec 2026, then 1.50 · 7.50</td></tr>
+    <tr><td>gemini-3.5-flash</td><td class="num">1,000</td><td class="num">10,000</td><td class="num">1.50 · 9.00</td></tr>
+    <tr><td>gemini-3-flash-preview</td><td class="num">1,000</td><td class="num">10,000</td><td class="num">0.50 · 3.00</td></tr>
+    <tr><td>gemini-3.5-flash-lite</td><td class="num">4,000</td><td class="num">150,000</td><td class="num">0.30 · 2.50</td></tr>
+    <tr><td>gemini-3.1-flash-lite</td><td class="num">4,000</td><td class="num">150,000</td><td class="num">0.25 · 1.50</td></tr>
+    <tr><td>gemini-3.1-pro-preview</td><td class="num">25</td><td class="num">250</td><td class="num">2.00 · 12.00</td></tr>
+    <tr><td>gemini-2.5-pro</td><td class="num">150</td><td class="num">1,000</td><td class="num">1.25 · 10.00</td></tr>
+    <tr><td>gemini-2.5-flash</td><td class="num">1,000</td><td class="num">10,000</td><td class="num">0.30 · 2.50</td></tr>
+    <tr><td>gemini-2.5-flash-lite</td><td class="num">4,000</td><td class="num">unlimited</td><td class="num">0.10 · 0.40</td></tr>
+    <tr><td>gemini-2.0-flash / -lite</td><td class="num">2,000 / 4,000</td><td class="num">unlimited</td><td class="num">0.10 · 0.40 / 0.075 · 0.30</td></tr>
+    <tr><td>gemma-4-31b / 26b</td><td class="num">30</td><td class="num">14,400</td><td class="num">billed at 0.30 · 2.50 (conservative)</td></tr>
+    <tr><td>gemini-embedding-001</td><td class="num">3,000</td><td class="num">unlimited</td><td class="num">0.15 · —</td></tr>
+  </table></div>
+  <h3>Free pool limits (<code>MODEL_FREE_LIMITS</code>)</h3>
+  <p>gpt-oss-20b 30 RPM / 14,400 RPD · gpt-oss-120b 30 / 1,000 · Qwen 3.6 27B 60 / 1,000 · Gemma 4 15 / 1,500 · Gemini 3.1 Flash-Lite 15 / 500 · Gemini 2.5/3.x Flash 5 / 20 · NVIDIA Nemotron 40 / 5,000 · OpenRouter free models 20 / 200.</p>
+  <h3>Router controls</h3>
+  <div class="scroll"><table>
+    <tr><th>Control</th><th>Value</th><th>Purpose</th></tr>
+    <tr><td>Rate counters</td><td>CacheService per model (minute + day), seeded once from API_USAGE</td><td>Skip models at ≥85% RPM or ≥90% RPD</td></tr>
+    <tr><td>Cooldowns</td><td class="num">429: 60 s · 5xx/timeout: 120 s · model gone: 30 min</td><td>Next turns try a failing model last</td></tr>
+    <tr><td>Per-call deadline</td><td class="num">Lightning 15 s · utility 10 s · Thinking 30 s · Intimate 45 s</td><td>Bound each attempt</td></tr>
+    <tr><td>Start budget</td><td class="num">30 · 25 · 60 · 75 s</td><td>No new attempt after this much chain time</td></tr>
+    <tr><td>Paid output cap</td><td class="num">1,024 · 2,048 · 3,072 · 4,096 tokens</td><td>Bounds hidden thinking + reply</td></tr>
+    <tr><td>Spend ceiling</td><td class="num">$9.95 / paid user / calendar month</td><td>Ledger <code>SPEND_yyyyMM_userId</code>; pre-call worst-case filter</td></tr>
+  </table></div>
+  <div class="callout">A user maxing every window around the clock all month — entirely on Economy — costs PRIME $3.20, PRIME MAX $8.05, ULTIMATE $5.62, ULTIMATE MAX $8.60 including a $1.50 background reserve. The ceiling is a guarantee, not a target.</div>
+</section>
+
+<!-- 08 -->
+<section id="elysium">
+  <h2><span class="n">08</span>Elysium X20 emotion engine</h2>
+  <p class="point">Shayari keeps a persistent 20-dimension emotional state per user that drifts with the conversation; it shapes tone silently and is never announced.</p>
+  <div class="figure">
+  <svg viewBox="0 0 900 330" role="img" aria-label="Elysium X20 update flow from message to prompt directive and BAROMETER">
+    <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+    <text x="20" y="28" class="d-ttl">The state drifts with the conversation; it never snaps</text>
+    <rect x="20" y="60" width="150" height="80" rx="10" class="d-box"/><text x="34" y="86" class="d-t">User message</text><text x="34" y="106" class="d-s">+ recent chats</text><text x="34" y="122" class="d-s">+ turn count</text>
+    <rect x="200" y="60" width="160" height="80" rx="10" class="d-box"/><text x="214" y="86" class="d-t">Signal analysis</text><text x="214" y="106" class="d-s">local · no API call</text><text x="214" y="122" class="d-s">intensity 0–1</text>
+    <rect x="390" y="60" width="170" height="80" rx="10" class="d-acc"/><text x="404" y="86" class="d-t">20 axes update</text><text x="404" y="106" class="d-s">α = 0.10 + 0.18 × intensity</text><text x="404" y="122" class="d-s">clamped to [0, 1]</text>
+    <rect x="590" y="60" width="140" height="80" rx="10" class="d-box"/><text x="604" y="86" class="d-t">Derived</text><text x="604" y="106" class="d-s">valence · arousal</text><text x="604" y="122" class="d-s">stability · mood</text>
+    <rect x="760" y="60" width="120" height="80" rx="10" class="d-jade"/><text x="774" y="86" class="d-t">Directive</text><text x="774" y="106" class="d-s">into prompt</text><text x="774" y="122" class="d-s">tone, not words</text>
+    <path d="M170 100H200" class="d-line" marker-end="url(#a4)"/><path d="M360 100H390" class="d-line" marker-end="url(#a4)"/><path d="M560 100H590" class="d-line" marker-end="url(#a4)"/><path d="M730 100H760" class="d-line" marker-end="url(#a4)"/>
+    <rect x="390" y="190" width="170" height="80" rx="10" class="d-box"/><text x="404" y="216" class="d-t">EMOTIONS · logs</text><text x="404" y="236" class="d-s">1 row per user</text><text x="404" y="252" class="d-s">snapshots → EMOTION_LOGS</text>
+    <rect x="590" y="190" width="140" height="80" rx="10" class="d-gold"/><text x="604" y="216" class="d-t">BAROMETER</text><text x="604" y="236" class="d-s">5-day drift</text><text x="604" y="252" class="d-s">rare check-in</text>
+    <rect x="760" y="190" width="120" height="80" rx="10" class="d-box"/><text x="774" y="216" class="d-t">LUMEN CHROMA</text><text x="774" y="236" class="d-s">UI tint from</text><text x="774" y="252" class="d-s">mood · valence</text>
+    <rect x="200" y="190" width="160" height="80" rx="10" class="d-box"/><text x="214" y="216" class="d-t">Daily drift</text><text x="214" y="236" class="d-s">baseline mood</text><text x="214" y="252" class="d-s">nightly trigger</text>
+    <path d="M475 140V190" class="d-line" marker-end="url(#a4)"/><path d="M560 230H590" class="d-line" marker-end="url(#a4)"/><path d="M660 140C660 165 820 165 820 190" class="d-dash" marker-end="url(#a4)"/><path d="M360 230H390" class="d-line" marker-end="url(#a4)"/>
+    <text x="20" y="306" class="d-s">BAROMETER guardrails: ≥6 samples, avg valence &lt; 0.42 or drop ≥ 0.12, 10-day cooldown, 7-day blackout after any crisis event. Never diagnostic, never surveillance-y.</text>
+  </svg>
+  <p class="figcap">emotion.gs · barometer.gs · response meta feeds the client theme</p>
+  </div>
+  <h3>The 20 dimensions and their baselines</h3>
+  <div class="scroll"><table>
+    <tr><th>Axis</th><th>Base</th><th>Axis</th><th>Base</th><th>Axis</th><th>Base</th><th>Axis</th><th>Base</th></tr>
+    <tr><td>warmth</td><td class="num">0.62</td><td>empathy</td><td class="num">0.66</td><td>curiosity</td><td class="num">0.55</td><td>calmness</td><td class="num">0.62</td></tr>
+    <tr><td>excitement</td><td class="num">0.34</td><td>playfulness</td><td class="num">0.32</td><td>seriousness</td><td class="num">0.45</td><td>confidence</td><td class="num">0.56</td></tr>
+    <tr><td>patience</td><td class="num">0.67</td><td>tenderness</td><td class="num">0.58</td><td>protectiveness</td><td class="num">0.40</td><td>optimism</td><td class="num">0.60</td></tr>
+    <tr><td>sincerity</td><td class="num">0.68</td><td>attentiveness</td><td class="num">0.65</td><td>urgency</td><td class="num">0.25</td><td>sociability</td><td class="num">0.54</td></tr>
+    <tr><td>affection</td><td class="num">0.50</td><td>sensitivity</td><td class="num">0.60</td><td>stability</td><td class="num">0.64</td><td>resilience</td><td class="num">0.57</td></tr>
+  </table></div>
+  <h3>Derived signals</h3>
+<pre>valence   = mean(warmth, empathy, optimism, affection, tenderness) − (seriousness + urgency) / 10   → mapped to [0,1]
+arousal   = mean(excitement, playfulness, urgency, curiosity)
+stability = mean(calmness, patience, stability, resilience)
+mood      = urgent | focused | bright | playful | gentle | calm | warm | concerned | grounded-warm</pre>
+  <p>Style presets (<code>urgent_support</code>, <code>focused_technical</code>, <code>playful_warm</code>, <code>calm_supportive</code>, <code>gentle_reassuring</code>, <code>grounded_warm</code>) select the directive's voice. Signal categories map joy, sadness, anger, fear, love, philosophical, casual and urgency cues to small per-axis deltas (about ±0.03 to ±0.08). Users can read the state with <code>/emotion</code>.</p>
+  <div class="callout jade"><b>v134 improvements.</b> One EMOTIONS read per update instead of three; the turn count comes from the session already read; signal analysis runs once per turn instead of once per axis (identical results); the last mood is cached so Lightning's response meta needs no sheet read.</div>
+</section>
+
+<!-- 09 -->
+<section id="membrane">
+  <h2><span class="n">09</span>Memory architecture: MEMBRANE 13 → MEMBRANE 14</h2>
+  <p class="point">MEMBRANE 14 adds a fourteenth component — the server-side Turn Ledger — and brings semantic recall live for the first time; the memory system is now durable, idempotent and filtered before decryption.</p>
+  <p>The repository documents the five core prompt layers as <em>MemoryWeave</em>. The thirteen MEMBRANE 13 components below are reconstructed from the v133 code; MEMBRANE 14 is that system plus the Turn Ledger, with the improvements marked.</p>
+  <div class="figure">
+  <svg viewBox="0 0 900 520" role="img" aria-label="MEMBRANE 14 components grouped into five families">
+    <text x="20" y="28" class="d-ttl">Fourteen components in five families; the Turn Ledger is new</text>
+    <rect x="20" y="50" width="860" height="128" rx="12" class="d-grp"/><text x="36" y="74" class="d-h">Prompt layers · injected by mode</text>
+    <rect x="36" y="88" width="158" height="76" rx="9" class="d-box"/><text x="48" y="110" class="d-m">01</text><text x="48" y="128" class="d-t">Global Memory</text><text x="48" y="146" class="d-s">admin truths · all modes</text>
+    <rect x="204" y="88" width="158" height="76" rx="9" class="d-box"/><text x="216" y="110" class="d-m">02</text><text x="216" y="128" class="d-t">Profile Memory</text><text x="216" y="146" class="d-s">aboutUser · encrypted</text>
+    <rect x="372" y="88" width="158" height="76" rx="9" class="d-box"/><text x="384" y="110" class="d-m">03</text><text x="384" y="128" class="d-t">Session Summary</text><text x="384" y="146" class="d-s">4–6 bullets · every 10</text>
+    <rect x="540" y="88" width="158" height="76" rx="9" class="d-jade"/><text x="552" y="110" class="d-m">04</text><text x="552" y="128" class="d-t">Long-term Memory</text><text x="552" y="146" class="d-s">top 6 · scored once</text>
+    <rect x="708" y="88" width="158" height="76" rx="9" class="d-jade"/><text x="720" y="110" class="d-m">05</text><text x="720" y="128" class="d-t">Recent Turns</text><text x="720" y="146" class="d-s">last 5 · tail read</text>
+    <rect x="20" y="192" width="420" height="128" rx="12" class="d-grp"/><text x="36" y="216" class="d-h">Working layers</text>
+    <rect x="36" y="230" width="190" height="76" rx="9" class="d-box"/><text x="48" y="252" class="d-m">06</text><text x="48" y="270" class="d-t">Lightning Cache</text><text x="48" y="288" class="d-s">rolling 10 turns · flushed</text>
+    <rect x="236" y="230" width="190" height="76" rx="9" class="d-acc"/><text x="248" y="252" class="d-m">07 · NEW</text><text x="248" y="270" class="d-t">Turn Ledger</text><text x="248" y="288" class="d-s">server save · idempotent</text>
+    <rect x="460" y="192" width="420" height="128" rx="12" class="d-grp"/><text x="476" y="216" class="d-h">Associative layers</text>
+    <rect x="476" y="230" width="126" height="76" rx="9" class="d-jade"/><text x="488" y="252" class="d-m">08 · LIVE</text><text x="488" y="270" class="d-t">Semantic</text><text x="488" y="288" class="d-s">768-d recall</text>
+    <rect x="612" y="230" width="126" height="76" rx="9" class="d-box"/><text x="624" y="252" class="d-m">09</text><text x="624" y="270" class="d-t">REVERIE</text><text x="624" y="288" class="d-s">≥21 days · ≥0.88</text>
+    <rect x="748" y="230" width="118" height="76" rx="9" class="d-box"/><text x="760" y="252" class="d-m">10</text><text x="760" y="270" class="d-t">Visual</text><text x="760" y="288" class="d-s">photo recall</text>
+    <rect x="20" y="334" width="420" height="128" rx="12" class="d-grp"/><text x="36" y="358" class="d-h">Social &amp; self</text>
+    <rect x="36" y="372" width="190" height="76" rx="9" class="d-box"/><text x="48" y="394" class="d-m">11</text><text x="48" y="412" class="d-t">Shared Memory</text><text x="48" y="430" class="d-s">privacy-filtered · /aboutme</text>
+    <rect x="236" y="372" width="190" height="76" rx="9" class="d-box"/><text x="248" y="394" class="d-m">12</text><text x="248" y="412" class="d-t">Self-Insights</text><text x="248" y="430" class="d-s">anonymized style learning</text>
+    <rect x="460" y="334" width="420" height="128" rx="12" class="d-grp"/><text x="476" y="358" class="d-h">Relational &amp; affective</text>
+    <rect x="476" y="372" width="190" height="76" rx="9" class="d-box"/><text x="488" y="394" class="d-m">13</text><text x="488" y="412" class="d-t">Affective Record</text><text x="488" y="430" class="d-s">emotion logs · BAROMETER</text>
+    <rect x="676" y="372" width="190" height="76" rx="9" class="d-box"/><text x="688" y="394" class="d-m">14</text><text x="688" y="412" class="d-t">Relationship Story</text><text x="688" y="430" class="d-s">timeline · constellation</text>
+    <text x="20" y="490" class="d-s">Cross-cutting: AES-256 encryption at rest · ERRATA (/forget, /fix) · nightly compaction into *_ARCHIVE · 12 topic clusters tag every memory and turn.</text>
+  </svg>
+  <p class="figcap">MEMBRANE 14 · numbering is a reading order, not a priority</p>
+  </div>
+  <h3>Long-term memory scoring</h3>
+<pre>score = importance × 10 + confidence × 5 + min(5, recallCount)
+      + 18 if pinned + 10 if cluster matches + 14 if the query appears verbatim
+      + 3 per overlapping token
+      + 20 × cosine similarity (when both vectors exist)
+      ± age term (importance ≥ 8 decays slowly; others lose up to 6)</pre>
+  <div class="scroll"><table>
+    <tr><th>Component</th><th>What improved in MEMBRANE 14</th></tr>
+    <tr><td>Turn Ledger <span class="tag new">new</span></td><td>Thinking/Intimate turns saved server-side with ids <code>&lt;turnId&gt;:u/:a</code> before the reply returns; a routing-only turn record (no text) in cache; follow-up claims the turn id so replays do nothing; recall counters deferred to the follow-up</td></tr>
+    <tr><td>Semantic recall <span class="tag up">live</span></td><td><code>gemini-embedding-001</code> replaced the shut-down model; 0 of 897 memories had vectors before; nightly backfill now embeds in batches of up to 50</td></tr>
+    <tr><td>Recent turns</td><td>Tail read of CHATLOGS, owner checked before decrypting; only returned rows are decrypted</td></tr>
+    <tr><td>Long-term memory</td><td>User rows filtered before parse; every memory scored once (same ranking); dedupe decrypts only the user's MEMORY_TEXT</td></tr>
+    <tr><td>Global Memory</td><td>Ranking rows cached 5 minutes, invalidated on admin writes; both <code>active</code> and <code>pinned</code> rows kept</td></tr>
+    <tr><td>Visual memory</td><td>Metadata read without the ~50k-char image cells; image row written once with caption</td></tr>
+    <tr><td>Lightning cache</td><td>No read after every append; prune only over the cap</td></tr>
+    <tr><td>Privacy</td><td>Stored and extracted text is always the Privacy-Shield output, including the legacy follow-up path</td></tr>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="safety">
+  <h2><span class="n">10</span>Safety, privacy and governance</h2>
+  <p class="point">Safety modules run before product logic and can override it; privacy and authorization are enforced server-side, never trusted from the browser.</p>
+  <div class="grid">
+    <div class="card"><h4>LIFELINE</h4><p>Crisis detection runs before every gate. A keyword prefilter gates the classifier; engaged turns bypass lock, plan, limit and budget, consume no quota, and surface structured crisis resources.</p></div>
+    <div class="card"><h4>SOVEREIGN · free will</h4><p>Shayari can end a conversation on her judgment (<code>[[DISENGAGE]]</code>). A lock follows, with a 24-hour fallback clear and admin <code>/unlock</code>. Suspended during crisis turns.</p></div>
+    <div class="card"><h4>COVENANT</h4><p>Trust ledger 15–100, default 70. A disengagement costs 35; ordinary turns repair 0.4 plus 4 on a new day. Warmth modifier only — never a capability gate.</p></div>
+    <div class="card"><h4>Privacy Shield</h4><p>Opt-in stripping of emails, phone numbers and card-like digit runs before any model call — and, since v134, before storage and memory extraction.</p></div>
+    <div class="card"><h4>Encryption at rest</h4><p>AES-256-CBC + HMAC-SHA256, <code>ENC1:</code> prefix, key only in Script Properties. Honest scope: protects sheet access and leaks, not runtime processing.</p></div>
+    <div class="card"><h4>Boundaries</h4><p>No facial recognition, permanently. Identity and ownership claims accepted only from the verified admin. Global memory is admin-only — enforced server-side since v134.</p></div>
+  </div>
+  <div class="callout"><b>Fixed in v134:</b> the post-reply follow-up previously trusted <code>isAdmin</code> and <code>forceGlobalMemory</code> from the browser, so a crafted call could write GLOBAL_MEMORY. Admin rights now come from USERS and the server-armed turn record. <span class="tag flag">open</span> COVENANT's daily bonus compares a Date cell to text, so it currently applies every turn.</div>
+</section>
+
+<!-- 11 -->
+<section id="features">
+  <h2><span class="n">11</span>Features and characteristics</h2>
+  <p class="point">Her character comes from a fixed persona plus live state: she replies briefly and warmly, remembers, reacts, reaches out first, and grows visibly over time.</p>
+  <div class="scroll"><table>
+    <tr><th>Feature</th><th>What it does</th><th>Module</th></tr>
+    <tr><td>Persona</td><td>Fixed system persona sent once per call to every provider; short, warm, emoji-led replies</td><td>gemini.gs</td></tr>
+    <tr><td>Double-texting</td><td>Occasional human-style split replies via <code>[[DTX]]</code></td><td>gemini.gs</td></tr>
+    <tr><td>Vision</td><td>Photo understanding with verbatim text transcription; encrypted storage; 15/day</td><td>vision.gs</td></tr>
+    <tr><td>Visual recall</td><td>Occasionally brings up a past photo (12% roll, cooldown, ≥ age)</td><td>visual_recall.gs</td></tr>
+    <tr><td>Voice notes</td><td>On-demand ElevenLabs voice, 8/day</td><td>voice.gs</td></tr>
+    <tr><td>Voice duet</td><td>Speak → transcribe → reply → speak back</td><td>voice_duet.gs · voice_bridge.gs</td></tr>
+    <tr><td>Reactions</td><td>Emoji reactions both ways; she reacts to some of your messages</td><td>reactions.gs</td></tr>
+    <tr><td>Streaks &amp; milestones</td><td>Daily streaks and anniversaries, celebrated in character</td><td>proactive.gs</td></tr>
+    <tr><td>Proactive outreach</td><td>Messages first to recently active users (35% per cycle, ≥20 h apart, stops after 3 unanswered); failed replies retried within 24 h; email notification</td><td>proactive.gs · email_notify.gs</td></tr>
+    <tr><td>Relationship story</td><td>"Our Story So Far" timeline and a memory constellation view</td><td>relationship_timeline.gs · memory_constellation.gs</td></tr>
+    <tr><td>Personality growth</td><td>Visible trait drift over the relationship</td><td>personality_growth.gs</td></tr>
+    <tr><td>Self-improvement</td><td>Learns general style from anonymized samples, never personal facts</td><td>self_improvement.gs</td></tr>
+    <tr><td>Live web search</td><td>Only on live-data cues; DDG + Wikipedia</td><td>gemini.gs</td></tr>
+    <tr><td>LUMEN CHROMA</td><td>Interface tint follows her mood, valence and arousal</td><td>index.html</td></tr>
+  </table></div>
+  <h3>Slash commands</h3>
+  <p><code>/help</code> <code>/reset</code> <code>/profile</code> <code>/memories</code> <code>/forget &lt;n&gt;</code> <code>/fix &lt;n&gt; &lt;text&gt;</code> <code>/aboutme</code> <code>/streak</code> <code>/emotion</code> · admin: <code>/globalmemory</code> <code>/selfmodel</code> <code>/unlock</code> <code>/trust</code> <code>/trustreset</code>. Bare words such as <code>help</code> also work (existing behaviour, preserved).</p>
+</section>
+
+<!-- 12 -->
+<section id="api">
+  <h2><span class="n">12</span>API and tool calling</h2>
+  <p class="point">The models never call tools themselves; the server orchestrates every tool — search, vision, embeddings — and runs the independent ones in one parallel batch.</p>
+  <h3>Server functions the client calls (<code>google.script.run</code>)</h3>
+  <div class="scroll"><table>
+    <tr><th>Function</th><th>Purpose</th></tr>
+    <tr><td><code>askShayari(userId, message, mode, time, tz, locale, imageBase64?, mime?)</code></td><td>One turn; returns the response contract</td></tr>
+    <tr><td><code>runBackgroundMemoryUpdate(…, cotTurnId, …)</code></td><td>Post-reply follow-up: memories, summary, streak, reaction (Thinking/Intimate)</td></tr>
+    <tr><td><code>getSessionStatusAll(userId)</code></td><td>Per-mode remaining/max/reset; read-only since v134</td></tr>
+    <tr><td><code>getDisengagementStatus(userId)</code></td><td>Free-will lock state (skipped when meta.lockStatus is present)</td></tr>
+    <tr><td><code>getChatHistory</code> · <code>getImageForMessage</code> · <code>getUserProfile</code></td><td>History, images, profile panel</td></tr>
+    <tr><td><code>transcribeAndReplyToVoice</code> · <code>checkVoiceBridgeResult</code></td><td>Voice duet and mic bridge</td></tr>
+  </table></div>
+  <h3>Orchestrated tools</h3>
+  <div class="scroll"><table>
+    <tr><th>Tool</th><th>When</th><th>How</th></tr>
+    <tr><td>Search decision</td><td>Live-data cue in the message</td><td>Utility model returns <code>{needs_search, search_query}</code>; in the batch</td></tr>
+    <tr><td>Web search</td><td>Decision says yes</td><td>DuckDuckGo + Wikipedia in parallel; DDG preferred; cached 10 min</td></tr>
+    <tr><td>Cluster inference</td><td>Thinking/Intimate</td><td>Utility model → JSON cluster; default cluster on failure</td></tr>
+    <tr><td>Query embedding</td><td>Intimate</td><td>embedContent, 768 dims; null on failure</td></tr>
+    <tr><td>Vision</td><td>Image attached, quota ok</td><td>First vision model in the batch, rest serially</td></tr>
+    <tr><td>Crisis classifier</td><td>Prefilter cue</td><td>Utility model, before the gates</td></tr>
+    <tr><td>Memory extraction + summary</td><td>Follow-up</td><td>Second fetchAll; new memories embedded in one batch call</td></tr>
+  </table></div>
+  <h3>External APIs</h3>
+  <p>Gemini <code>generateContent</code> / <code>embedContent</code> / <code>batchEmbedContents</code>; Groq, NVIDIA, OpenRouter and Vercel AI Gateway (OpenAI-compatible <code>/chat/completions</code>, fallback models via <code>providerOptions.gateway.models</code>); ElevenLabs text-to-speech; DuckDuckGo HTML; Wikipedia search API. Script Properties hold every key: <code>GEMINI_API_KEY_1..4</code>, <code>GROQ_API_KEY</code>, <code>NVIDIA_API_KEY</code>, <code>OPENROUTER_API_KEY</code>, <code>AI_GATEWAY_API_KEY</code>, <code>GEMINI_PAID_API_KEY</code>, <code>ENCRYPTION_MASTER_KEY</code>, <code>ELEVENLABS_*</code>.</p>
+</section>
+
+<!-- 13 -->
+<section id="data">
+  <h2><span class="n">13</span>Data model</h2>
+  <p class="point">Google Sheets is the database: one tab per concern, archive twins for anything that grows, and conversation text encrypted in place.</p>
+  <div class="scroll"><table>
+    <tr><th>Tab</th><th>Rows (export)</th><th>Holds</th></tr>
+    <tr><td>USERS</td><td class="num">14</td><td>Account, role, plan, encrypted profile memory</td></tr>
+    <tr><td>CHATLOGS · _ARCHIVE</td><td class="num">841 · 1,206</td><td>Encrypted turns, cluster, image id; 150 per user kept live</td></tr>
+    <tr><td>MEMORY · _ARCHIVE</td><td class="num">897 · 0</td><td>Encrypted long-term memories, scores, embeddings</td></tr>
+    <tr><td>GLOBAL_MEMORY</td><td class="num">127</td><td>Admin truths (active + pinned)</td></tr>
+    <tr><td>SELF_INSIGHTS</td><td class="num">276</td><td>Anonymized style insights</td></tr>
+    <tr><td>SESSIONS · EMOTIONS</td><td class="num">9 · 14</td><td>Session summary per user; Elysium X20 state per user</td></tr>
+    <tr><td>EMOTION_LOGS · _ARCHIVE</td><td class="num">0 · 82</td><td>Per-turn emotion snapshots</td></tr>
+    <tr><td>SESSION_LIMITS</td><td class="num">49</td><td>Window counters per user per mode</td></tr>
+    <tr><td>API_USAGE · _ARCHIVE</td><td class="num">220 · 491</td><td>Per-attempt log; daily rollups</td></tr>
+    <tr><td>LIGHTNING_CACHE · LIGHTNING_FLUSH</td><td class="num">0 · 17</td><td>Rolling Lightning context; flush log</td></tr>
+    <tr><td>IMAGES · IMAGE_RECALL_LOG</td><td class="num">10 · 3</td><td>Encrypted photos with captions; recall history</td></tr>
+    <tr><td>PENDING_MESSAGES · FAILED_REPLIES</td><td class="num">61 · 0</td><td>Proactive and retry queues</td></tr>
+    <tr><td>COVENANT · DISENGAGEMENT · RECONCILIATION</td><td class="num">9 · 1 · 1</td><td>Trust ledger; free-will locks</td></tr>
+    <tr><td>STREAKS · TIMELINE_EVENTS · REACTIONS</td><td class="num">9 · 12 · 20</td><td>Relationship features</td></tr>
+    <tr><td>SHARED_MEMORY · PRIVACY_SHIELD</td><td class="num">2 · 2</td><td>Cross-user safe facts; shield opt-ins</td></tr>
+    <tr><td>VOICE_NOTE_USAGE · EMAIL_NOTIFY_LOG</td><td class="num">31 · 11</td><td>Voice quota; email log</td></tr>
+    <tr><td>CRISIS_LOG · BAROMETER</td><td class="num">0 · 0</td><td>Safety event log; trend check-ins</td></tr>
+    <tr><td>PLAN_AUDIT · OTPS · TEST_RESULTS</td><td class="num">8 · 6 · 4</td><td>Plan changes; password resets; test runs</td></tr>
+  </table></div>
+  <p>Paid spend lives outside the sheet, in Script Properties keys <code>SPEND_yyyyMM_userId</code> (micro-USD), so the schema is unchanged.</p>
+</section>
+
+<!-- 14 -->
+<section id="journey">
+  <h2><span class="n">14</span>User journey</h2>
+  <p class="point">A user starts free on Lightning, unlocks depth by plan, and lives inside daily windows and a monthly budget they never have to think about.</p>
+  <div class="figure">
+  <svg viewBox="0 0 900 330" role="img" aria-label="User journey from sign-up to the monthly cycle">
+    <defs><marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+    <text x="20" y="28" class="d-ttl">Free on Lightning, depth by plan, limits that explain themselves</text>
+    <rect x="20" y="60" width="150" height="96" rx="10" class="d-box"/><text x="34" y="86" class="d-t">Sign up</text><text x="34" y="106" class="d-s">email + OTP reset</text><text x="34" y="122" class="d-s">7-day sliding</text><text x="34" y="138" class="d-s">session</text>
+    <rect x="196" y="60" width="150" height="96" rx="10" class="d-box"/><text x="210" y="86" class="d-t">FREE</text><text x="210" y="106" class="d-s">Lightning 10/day</text><text x="210" y="122" class="d-s">free model pool</text><text x="210" y="138" class="d-s">memory builds</text>
+    <rect x="372" y="60" width="150" height="96" rx="10" class="d-gold"/><text x="386" y="86" class="d-t">Upgrade</text><text x="386" y="106" class="d-s">plan gate shows</text><text x="386" y="122" class="d-s">the tier needed</text><text x="386" y="138" class="d-s">Patreon</text>
+    <rect x="548" y="60" width="150" height="96" rx="10" class="d-acc"/><text x="562" y="86" class="d-t">Paid depth</text><text x="562" y="106" class="d-s">Thinking · Intimate</text><text x="562" y="122" class="d-s">paid key · best</text><text x="562" y="138" class="d-s">models first</text>
+    <rect x="724" y="60" width="156" height="96" rx="10" class="d-box"/><text x="738" y="86" class="d-t">Daily rhythm</text><text x="738" y="106" class="d-s">windows + countdown</text><text x="738" y="122" class="d-s">she messages first</text><text x="738" y="138" class="d-s">streaks</text>
+    <path d="M170 108H196" class="d-line" marker-end="url(#a5)"/><path d="M346 108H372" class="d-line" marker-end="url(#a5)"/><path d="M522 108H548" class="d-line" marker-end="url(#a5)"/><path d="M698 108H724" class="d-line" marker-end="url(#a5)"/>
+    <rect x="548" y="200" width="150" height="96" rx="10" class="d-jade"/><text x="562" y="226" class="d-t">Monthly pacing</text><text x="562" y="246" class="d-s">heavy use steps to</text><text x="562" y="262" class="d-s">cheaper models,</text><text x="562" y="278" class="d-s">never a wall</text>
+    <rect x="724" y="200" width="156" height="96" rx="10" class="d-box"/><text x="738" y="226" class="d-t">1st of month</text><text x="738" y="246" class="d-s">ledger resets</text><text x="738" y="262" class="d-s">best models again</text>
+    <rect x="196" y="200" width="326" height="96" rx="10" class="d-acc"/><text x="210" y="226" class="d-t">Always available</text><text x="210" y="246" class="d-s">LIFELINE answers a crisis on any plan, at any limit,</text><text x="210" y="262" class="d-s">even past the budget. She may step back (SOVEREIGN),</text><text x="210" y="278" class="d-s">and warmth returns through good turns (COVENANT).</text>
+    <path d="M802 156V200" class="d-line" marker-end="url(#a5)"/><path d="M724 248H698" class="d-line" marker-end="url(#a5)"/>
+  </svg>
+  <p class="figcap">user journey · plan gate → paid depth → daily and monthly cycles</p>
+  </div>
+</section>
+
+<!-- 15 -->
+<section id="design">
+  <h2><span class="n">15</span>Efficient product design and user experience</h2>
+  <p class="point">The product is designed so the user feels continuity and the operator controls cost: work the user can't see happens after the reply, and every limit explains itself.</p>
+  <div class="grid">
+    <div class="card"><h4>Reply first, enrich later</h4><p>Memory extraction, summaries, reactions and recall counters run in the follow-up after the reply is on screen.</p></div>
+    <div class="card"><h4>Parallel by default</h4><p>Independent calls share one fetchAll; the turn waits for the slowest, not the sum.</p></div>
+    <div class="card"><h4>One read per concern</h4><p>USERS, session, covenant and limit rows are read once and passed along; nothing authorization-relevant is cached across requests.</p></div>
+    <div class="card"><h4>Degrade, never break</h4><p>Every helper has a fallback: default cluster, null embedding, next vision model, cheaper paid level, free pool when the paid key is absent.</p></div>
+    <div class="card"><h4>Limits that explain</h4><p>Plan gates name the tier; limits show a countdown; the monthly budget message names the reset date.</p></div>
+    <div class="card"><h4>Fewer client calls</h4><p>Session and lock status ride on the reply, removing two round trips per turn.</p></div>
+  </div>
+  <h3>Experience principles</h3>
+  <ul>
+    <li><b>Embodied, not announced:</b> emotion and memory shape tone and content; mechanics are never narrated.</li>
+    <li><b>Continuity across modes:</b> one thread, so switching depth never loses the conversation.</li>
+    <li><b>Honest disclosure:</b> a fully disclosed non-human entity; encryption is described as at-rest, not end-to-end.</li>
+    <li><b>Care over engagement:</b> BAROMETER check-ins are rare by design; outreach stops after three unanswered messages.</li>
+  </ul>
+</section>
+
+<!-- 16 -->
+<section id="research">
+  <h2><span class="n">16</span>Research basis</h2>
+  <p class="point">v134 and v135 were driven by a code-level latency investigation and by measurements from the open-beta database, not by assumption.</p>
+  <div class="scroll"><table>
+    <tr><th>Finding</th><th>Evidence</th><th>Outcome</th></tr>
+    <tr><td>Slow or rate-limited models dominate latency</td><td>Intimate primary Gemma 4 31B averaged 24.9 s per call (max 207 s); utility gpt-oss-20b failed 39% of 6,210 calls</td><td>Cooldowns, budgets, paced paid routing</td></tr>
+    <tr><td>Embeddings were silently dead</td><td>0 of 897 memories had vectors; text-embedding-004 shut down 14 Jan 2026</td><td>gemini-embedding-001, batch backfill</td></tr>
+    <tr><td>Serial pre-model calls</td><td>Search decision, cluster, embedding, vision ran one after another</td><td>One fetchAll batch</td></tr>
+    <tr><td>Decrypt-before-filter</td><td>Whole CHATLOGS / MEMORY decrypted per read</td><td>Owner filter first; AES ~4.3× faster</td></tr>
+    <tr><td>Archive header drift</td><td>CHATLOGS_ARCHIVE had ARCHIVED_AT twice</td><td>Header aligned to 9 columns</td></tr>
+    <tr><td>Paid budget sizing</td><td>Measured prompts: Lightning 3,253 chars, Thinking 3,717, Intimate 4,036, persona 1,763</td><td>Quotas and pacing bands</td></tr>
+  </table></div>
+  <p>Shayari is also the reference subject for the lab's synthetic-persona evaluation work (MIRAGE-Bench and SPERB), which judge realism, coherence, disclosure integrity and public standing of non-human entities.</p>
+</section>
+
+<!-- 17 -->
+<section id="improved">
+  <h2><span class="n">17</span>What was improved</h2>
+  <p class="point">Three builds since the v133 backup made the system faster, safer and economically bounded without changing its persona, schema or encryption format.</p>
+  <div class="scroll"><table>
+    <tr><th>Build</th><th>Changes</th></tr>
+    <tr><td>v134 · latency</td><td>Turn timing logs; server-side save with turn ids; idempotent, server-authoritative follow-up (GLOBAL_MEMORY spoof closed); Privacy Shield on stored text; one USERS read; tail reads; filter-before-decrypt; table-driven AES and memoised keys; fetchAll batch; search gate defaults to no search; parallel search with cache; CacheService rate counters and cooldowns; per-mode deadlines and start budgets; Groq reasoning effort and output budgets; duplicated persona removed; batched API_USAGE; score-once retrieval; gemini-embedding-001; one-write images; client status on the reply; archive header fix; Vercel AI Gateway last tier; 39 tests</td></tr>
+    <tr><td>v135 · paid tier</td><td><code>billing.gs</code>: separate free and paid pools; <code>GEMINI_PAID_API_KEY</code> for every paid call (replies, utility, vision, voice, embeddings); per-call metering from usageMetadata; monthly ledger with a $9.95 hard stop; crisis exemption on economy models; budget-reached reply</td></tr>
+    <tr><td>v135.1 · quotas</td><td>Paid Lightning cut to 5/day; quotas resized for realistic heavy use</td></tr>
+    <tr><td>v135.2 · pacing</td><td>Budget pacing across all 17 models in five levels; full Thinking/Intimate quotas restored; 3.1 Pro for ULTIMATE MAX Intimate; pace level in spend report; 63 tests</td></tr>
+  </table></div>
+</section>
+
+<!-- 18 -->
+<section id="status">
+  <h2><span class="n">18</span>Status and decisions</h2>
+  <p class="point">v135.2 is code-complete and tested; it goes live when the owner deploys it and sets the paid key.</p>
+  <div class="scroll"><table>
+    <tr><th>Item</th><th>Status</th><th>Next step</th></tr>
+    <tr><td>v135.2 deployment</td><td>Built, awaiting deploy</td><td>Replace files, run <code>runAllTests()</code>, Deploy → New version</td></tr>
+    <tr><td><code>GEMINI_PAID_API_KEY</code></td><td>Owner action</td><td>Create in AI Studio, add to Script Properties, run <code>smokeTestPaidKey()</code></td></tr>
+    <tr><td>Cloud billing alert</td><td>Owner action</td><td>Budget = $9.95 × paid users (the ceiling is per user; Google bills per project)</td></tr>
+    <tr><td>Vercel Gateway</td><td>Optional</td><td><code>AI_GATEWAY_API_KEY</code>; decide Intimate access (<code>VERCEL_ALLOW_INTIMATE</code>)</td></tr>
+    <tr><td>Mic bridge</td><td>Pending</td><td>Deploy <code>mic-bridge.html</code> to GitHub Pages; set <code>MIC_BRIDGE_URL</code></td></tr>
+    <tr><td>COVENANT daily bonus</td><td>Known issue</td><td>Compare dates as dates (behaviour change)</td></tr>
+    <tr><td>REVERIE threshold</td><td>Calibrate</td><td>Review 0.88 once real embeddings exist</td></tr>
+    <tr><td>Pacing bands</td><td>Tunable</td><td>Raise <code>PAID_PACE_BANDS</code> / front-load for more premium time; review <code>getPaidSpendReport()</code> mid-month</td></tr>
+    <tr><td>Repo docs</td><td>Out of date</td><td>ARCHITECTURE, MEMORY_SYSTEM, EMOTION_ENGINE describe v128.2; update to v135.2</td></tr>
+    <tr><td>Price assumptions</td><td>Watch</td><td>3.6/3.7 standard prices assumed equal to 3.8; Gemma billed conservatively</td></tr>
+  </table></div>
+</section>
+
+<footer>Shayari NHE-01 · Companion Model Documentation · v135.2 · compiled 3 Oct 2026 from the Apps Script source, the repository docs and the Shay_Open_Beta_DB_1 export. Where documents disagree, the code wins.</footer>
+</main>
+</div>
+<script>
+(function(){
+var d=document,$=function(q,r){return(r||d).querySelector(q)},$$=function(q,r){return[].slice.call((r||d).querySelectorAll(q))};
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var bar=d.createElement('div');bar.id='prog';d.body.appendChild(bar);
+function onScroll(){var h=d.documentElement;var p=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);bar.style.transform='scaleX('+p+')'}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+// hero canvas
+var hero=$('header.hero');var cv=d.createElement('canvas');cv.id='hero-cv';hero.insertBefore(cv,hero.firstChild);
+var cx=cv.getContext('2d'),W,H,pts=[],mouse={x:-999,y:-999};
+function rs(){var r=hero.getBoundingClientRect();W=cv.width=r.width*devicePixelRatio;H=cv.height=r.height*devicePixelRatio;var n=Math.min(70,Math.floor(r.width/16));pts=[];for(var i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35*devicePixelRatio,vy:(Math.random()-.5)*.35*devicePixelRatio})}
+rs();addEventListener('resize',rs);
+hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();mouse.x=(e.clientX-r.left)*devicePixelRatio;mouse.y=(e.clientY-r.top)*devicePixelRatio});
+hero.addEventListener('mouseleave',function(){mouse.x=mouse.y=-999});
+function col(a){var c=getComputedStyle(d.documentElement).getPropertyValue('--accent').trim();var el=d.createElement('i');el.style.color=c;d.body.appendChild(el);var rgb=getComputedStyle(el).color;d.body.removeChild(el);return rgb.replace('rgb(','rgba(').replace(')',','+a+')')}
+var vis=true;new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(hero);
+function draw(){if(vis){cx.clearRect(0,0,W,H);var L=150*devicePixelRatio;
+for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+var dx=p.x-mouse.x,dy=p.y-mouse.y,dm=Math.hypot(dx,dy);if(dm<140*devicePixelRatio){p.x+=dx/dm*1.2;p.y+=dy/dm*1.2}
+cx.fillStyle=col(.55);cx.beginPath();cx.arc(p.x,p.y,1.8*devicePixelRatio,0,7);cx.fill();
+for(var j=i+1;j<pts.length;j++){var q=pts[j],dd=Math.hypot(p.x-q.x,p.y-q.y);if(dd<L){cx.strokeStyle=col(.22*(1-dd/L));cx.lineWidth=devicePixelRatio;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.stroke()}}}}
+if(!rm)requestAnimationFrame(draw)}
+if(rm){draw()}else draw();
+// reveal
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.08});
+$$('.card,.figure,.scroll,.callout,pre,.ins,h3,.point').forEach(function(el){el.classList.add('rv');io.observe(el)});
+var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.2});$$('section').forEach(function(s){so.observe(s)});
+// count up
+function cnt(el){var t=el.textContent.trim();var m=t.match(/^(\$?)(\d+(?:\.\d+)?)(.*)$/);if(!m)return;var end=parseFloat(m[2]),dec=(m[2].split('.')[1]||'').length,t0=null;
+function f(ts){t0=t0||ts;var k=Math.min(1,(ts-t0)/1100),v=end*(1-Math.pow(1-k,3));el.textContent=m[1]+v.toFixed(dec)+m[3];if(k<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!rm)cnt(e.target);co.unobserve(e.target)}})},{threshold:.6});$$('.stat').forEach(function(s){co.observe(s)});
+// card glow
+$$('.card').forEach(function(c){c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')})});
+// toc spy
+var links=$$('nav.toc a');var secs=links.map(function(a){return $(a.getAttribute('href'))});
+var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-30% 0px -60% 0px'});secs.forEach(function(s){s&&spy.observe(s)});
+// jump buttons
+$$('[data-go]').forEach(function(b){b.addEventListener('click',function(){var t=$(b.dataset.go);t&&t.scrollIntoView({behavior:rm?'auto':'smooth'})})});
+// theme + palette dock
+var dock=d.createElement('div');dock.className='dock';dock.innerHTML='<button class="fab" id="pk" aria-label="Search sections">Search <b>/</b></button><button class="fab" id="th" aria-label="Toggle theme">Theme</button>';d.body.appendChild(dock);
+$('#th').onclick=function(){var r=d.documentElement,cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',cur==='dark'?'light':'dark')};
+var pal=d.createElement('div');pal.id='pal';pal.innerHTML='<div class="box"><input placeholder="Search the documentation..." aria-label="Search"><ul></ul></div>';d.body.appendChild(pal);
+var inp=$('input',pal),ul=$('ul',pal),idx=$$('section').map(function(s){return{id:s.id,t:$('h2',s).textContent.replace(/^\d+/,''),n:$('h2 .n',s).textContent,x:s.textContent.toLowerCase()}}),sel=0;
+function render(){var q=inp.value.trim().toLowerCase();var r=idx.filter(function(i){return!q||i.x.indexOf(q)>-1}).slice(0,12);ul.innerHTML=r.map(function(i,k){var c=q?(i.x.split(q).length-1):0;return '<li><a href="#'+i.id+'" class="'+(k===sel?'sel':'')+'"><i>'+i.n+'</i><span>'+i.t+'</span>'+(q?'<i style="margin-left:auto">'+c+' match'+(c==1?'':'es')+'</i>':'')+'</a></li>'}).join('')}
+function open(){pal.classList.add('open');inp.value='';sel=0;render();inp.focus()}function close(){pal.classList.remove('open')}
+$('#pk').onclick=open;pal.onclick=function(e){if(e.target===pal)close()};
+inp.oninput=function(){sel=0;render()};
+ul.onclick=function(e){if(e.target.closest('a'))close()};
+addEventListener('keydown',function(e){if(e.key==='/'&&!pal.classList.contains('open')&&!/INPUT|TEXTAREA/.test(e.target.tagName)){e.preventDefault();open()}else if(e.key==='Escape')close();else if(pal.classList.contains('open')){var a=$$('a',ul);if(e.key==='ArrowDown'){sel=Math.min(a.length-1,sel+1);render();e.preventDefault()}if(e.key==='ArrowUp'){sel=Math.max(0,sel-1);render();e.preventDefault()}if(e.key==='Enter'&&a[sel]){a[sel].click()}}});
+})();
+</script>
+</body>
+  </html>
