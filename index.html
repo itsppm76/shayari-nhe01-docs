@@ -474,6 +474,13 @@ stability = mean(calmness, patience, stability, resilience)
 mood      = urgent | focused | bright | playful | gentle | calm | warm | concerned | grounded-warm</pre>
   <p>Style presets (<code>urgent_support</code>, <code>focused_technical</code>, <code>playful_warm</code>, <code>calm_supportive</code>, <code>gentle_reassuring</code>, <code>grounded_warm</code>) select the directive's voice. Signal categories map joy, sadness, anger, fear, love, philosophical, casual and urgency cues to small per-axis deltas (about ±0.03 to ±0.08). Users can read the state with <code>/emotion</code>.</p>
   <div class="callout jade"><b>v134 improvements.</b> One EMOTIONS read per update instead of three; the turn count comes from the session already read; signal analysis runs once per turn instead of once per axis (identical results); the last mood is cached so Lightning's response meta needs no sheet read.</div>
+  <h3>The Elysium FR research models</h3>
+  <p>Beyond the X20 engine, OpenNHE has trained three Elysium FR adapters for emotion labeling. They are research models and are not wired into Shayari. Each has a Zenodo paper (CC BY-NC-ND 4.0) with limits stated and no state-of-the-art claim.</p>
+  <div class="grid">
+    <div class="card"><h4>X 20 FR</h4><p>LoRA on Qwen2.5-1.5B that outputs structured appraisal JSON. Public weights; rights to the original work reserved.</p><p><a href="https://huggingface.co/open-nhe/Elysium-X-20-FR" target="_blank" rel="noopener">Model</a> · <a href="https://doi.org/10.5281/zenodo.23161139" target="_blank" rel="noopener">Paper, DOI 10.5281/zenodo.23161139</a></p></div>
+    <div class="card"><h4>X 150 FR</h4><p>LoRA that maps a conversation onto a 150-coordinate taxonomy. Public model, GGUF build and dataset (CC BY 4.0).</p><p><a href="https://huggingface.co/open-nhe/Elysium-X-150-FR" target="_blank" rel="noopener">Model</a> · <a href="https://huggingface.co/datasets/open-nhe/Elysium-X-150-FR-dataset" target="_blank" rel="noopener">Dataset</a> · <a href="https://doi.org/10.5281/zenodo.23155240" target="_blank" rel="noopener">Paper, DOI 10.5281/zenodo.23155240</a></p></div>
+    <div class="card"><h4>X 500 FR</h4><p><b>Proprietary.</b> Model, data and code are not public. Only the paper is public.</p><p><a href="https://doi.org/10.5281/zenodo.23159402" target="_blank" rel="noopener">Paper, DOI 10.5281/zenodo.23159402</a> · <a href="https://huggingface.co/spaces/open-nhe/Elysium-X-500-FR-Paper" target="_blank" rel="noopener">Paper page</a></p></div>
+  </div>
 </section>
 
 <!-- 09 -->
